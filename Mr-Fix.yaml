@@ -262,7 +262,7 @@ proxy-groups:
     url: https://cp.cloudflare.com/generate_204
     interval: 1800
     lazy: true
-    use: [Mr_afxoni_All, Mr_afxoni_HY2]
+    use: [Mr_afxoni_All]
 
   - name: 🔄 Fallback-All
     type: fallback
