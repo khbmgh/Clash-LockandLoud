@@ -375,6 +375,11 @@ function tuicToSingbox(p) {
 }
 
 function wgToSingbox(p) {
+    // هشدار مستندات: outbound از نوع wireguard از نسخه ۱.۱۱ سینگ‌باکس Deprecated است
+    // و طبق changelog/migration رسمی در نسخه ۱.۱۳.۰ کاملاً حذف می‌شود؛ جایگزین رسمی
+    // نوع «endpoint» با ساختار متفاوت (root-level "endpoints" + ارجاع در route.rules) است.
+    // ساختار فعلی (server/server_port در ریشه یا داخل peers) هنوز روی نسخه‌های قبل از
+    // ۱.۱۳.۰ کار می‌کند اما برای سازگاری بلندمدت باید به مدل endpoint مهاجرت شود.
     const local_address = [];
     if (p.ip) local_address.push(`${p.ip}/32`);
     if (p.ipv6) local_address.push(`${p.ipv6}/128`);
@@ -434,7 +439,7 @@ function buildSingboxConfig(outbounds) {
 
     return {
         log: {
-            level: "panic"
+            level: "warn"
         },
         dns: {
             servers: [
@@ -445,14 +450,12 @@ function buildSingboxConfig(outbounds) {
                 },
                 {
                     type: "local",
-                    tag: "local_dns",
-                    domain_resolver: "resolver_dns"
+                    tag: "local_dns"
                 },
                 {
                     type: "https",
                     tag: "remote_dns",
                     detour: "qqoli",
-                    domain_resolver: "hosts_dns",
                     server: "8.8.4.4"
                 },
                 {
@@ -518,8 +521,8 @@ function buildSingboxConfig(outbounds) {
             ],
             rules: [
                 {
-                    domain_suffix: "raw.githubusercontent.com",
-                    server: "local_dns"
+                    domain: ["raw.githubusercontent.com", "security.cloudflare-dns.com", "www.gstatic.com"],
+                    server: "hosts_dns"
                 },
                 {
                     ip_accept_any: true,
