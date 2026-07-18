@@ -1,0 +1,48 @@
+name: Update All Proxies
+
+on:
+  schedule:
+    - cron: '8 * * * *' # اجرای خودکار در دقیقه ۶ هر ساعت
+  workflow_dispatch: # امکان اجرای دستی
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # دسترسی لازم برای کامیت و پوش کردن تغییرات
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          npm install node-fetch@2
+          pip install ruamel.yaml
+
+      - name: Run Main Scraper
+        run: node index.js
+
+      - name: Check and Filter Live Proxies
+        run: python ping_checker.py
+
+      - name: Run Converter (V2Ray + Sing-Box)
+        run: node convert.js  
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto Update: Scrape, Filter & Convert Proxies $(date)" || exit 0
+          git push
