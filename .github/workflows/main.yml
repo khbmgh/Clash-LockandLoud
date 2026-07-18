@@ -30,10 +30,11 @@ jobs:
       - name: Run Converter (V2Ray + Sing-Box)
         run: node convert.js  
 
-      - name: Commit and Push changes
+- name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Auto Update: Scrape, Ping & Convert Proxies $(date)" || exit 0
+          git pull --rebase origin main
           git push
