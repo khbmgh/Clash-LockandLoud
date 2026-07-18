@@ -471,7 +471,6 @@ function buildSingboxConfig(outbounds) {
         }
     };
 }
-
 // ── ۵. main ───────────────────────────────────────────────
 function main() {
     const inputFile = 'all.yaml';
