@@ -1,6 +1,6 @@
 const fs    = require('fs');
 const fetch = require('node-fetch');
-
+const net   = require('net'); // این خط رو اضافه کن
 // =====================================================
 // ۱. تنظیمات
 // =====================================================
@@ -146,9 +146,14 @@ async function main() {
     const results = await Promise.allSettled(fetchPromises);
     results.forEach(r => { if (r.status === "fulfilled") allProxies.push(...r.value); });
 
-    const unique = dedupe(allProxies);
+const unique = dedupe(allProxies);
     console.log(`Total unique proxies collected: ${unique.length}`);
-    generateFiles(unique);
+    
+    // پراکسی‌های یکتا رو میدیم به فیلتر پینگ
+    const liveProxies = await filterLiveProxies(unique, 300);
+    
+    // حالا پراکسی‌های زنده رو برای تولید فایل می‌فرستیم
+    generateFiles(liveProxies);
 }
 
 // =====================================================
@@ -1562,7 +1567,54 @@ function dedupe(list) {
     }
     return [...m.values()];
 }
+// =====================================================
+// سیستم تست پینگ (TCP Check)
+// =====================================================
+function checkTcp(host, port, timeout = 2500) {
+    return new Promise((resolve) => {
+        const socket = new net.Socket();
+        let isAlive = false;
 
+        socket.setTimeout(timeout);
+
+        socket.on('connect', () => {
+            isAlive = true;
+            socket.destroy();
+        });
+
+        socket.on('timeout', () => socket.destroy());
+        socket.on('error', () => socket.destroy());
+        socket.on('close', () => resolve(isAlive));
+
+        // مدیریت فرمت آی‌پی‌های نسخه ۶
+        const cleanHost = host.replace(/^\[|\]$/g, '');
+        socket.connect(port, cleanHost);
+    });
+}
+
+async function filterLiveProxies(proxies, concurrency = 300) {
+    console.log(`\n🔍 Starting TCP Ping Check for ${proxies.length} proxies...`);
+    const liveProxies = [];
+    let checked = 0;
+
+    // تست موازی برای افزایش سرعت
+    for (let i = 0; i < proxies.length; i += concurrency) {
+        const chunk = proxies.slice(i, i + concurrency);
+        const promises = chunk.map(async (p) => {
+            if (p.server && p.port) {
+                const alive = await checkTcp(p.server, p.port, 2500); // تایم‌اوت ۲.۵ ثانیه
+                if (alive) liveProxies.push(p);
+            }
+        });
+        
+        await Promise.all(promises);
+        checked += chunk.length;
+        process.stdout.write(`\r⏳ Checked: ${checked}/${proxies.length} | Live: ${liveProxies.length}`);
+    }
+    
+    console.log(`\n✅ Ping check done! Live proxies: ${liveProxies.length}\n`);
+    return liveProxies;
+}
 // =====================================================
 // ۱۲. تولید فایل‌های خروجی
 // =====================================================
