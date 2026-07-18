@@ -248,7 +248,6 @@ function buildTlsObj(p) {
     if (p['skip-cert-verify']) tls.insecure = true;
     if (p.alpn) tls.alpn = [].concat(p.alpn).map(String);
     
-    // مدیریت uTLS: اگه خودش داشت قرار میده، اگه نداشت ولی Reality بود پیش‌فرض Chrome رو میذاره
     if (p['client-fingerprint']) {
         tls.utls = { enabled: true, fingerprint: String(p['client-fingerprint']) };
     } else if (p['reality-opts']) {
@@ -256,16 +255,21 @@ function buildTlsObj(p) {
     }
 
     if (p['reality-opts']) {
+        const shortId = p['reality-opts']['short-id'] ? String(p['reality-opts']['short-id']) : '';
+        
         tls.reality = {
             enabled: true,
-            public_key: String(p['reality-opts']['public-key'] || ''),
-            short_id: p['reality-opts']['short-id'] ? String(p['reality-opts']['short-id']) : ''
+            public_key: String(p['reality-opts']['public-key'] || '')
         };
+
+        // شرط جدید: فقط اگه short_id معتبر و زوج بود اضافه بشه
+        if (shortId.length > 0 && shortId.length % 2 === 0) {
+            tls.reality.short_id = shortId;
+        }
     }
     
     return tls;
 }
-
 function buildTransport(p) {
     if (!p.network || p.network === 'tcp') return null;
     if (p.network === 'ws') {
