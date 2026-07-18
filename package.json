@@ -1,0 +1,9 @@
+{
+  "name": "proxy-aggregator",
+  "version": "1.0.0",
+  "description": "Automated Proxy Scraper and Converter",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
