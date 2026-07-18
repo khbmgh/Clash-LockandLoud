@@ -243,10 +243,18 @@ function proxyToSingbox(p) {
 
 function buildTlsObj(p) {
     const tls = { enabled: true };
+    
     if (p.servername || p.sni) tls.server_name = String(p.servername || p.sni);
     if (p['skip-cert-verify']) tls.insecure = true;
     if (p.alpn) tls.alpn = [].concat(p.alpn).map(String);
-    if (p['client-fingerprint']) tls.utls = { enabled: true, fingerprint: String(p['client-fingerprint']) };
+    
+    // مدیریت uTLS: اگه خودش داشت قرار میده، اگه نداشت ولی Reality بود پیش‌فرض Chrome رو میذاره
+    if (p['client-fingerprint']) {
+        tls.utls = { enabled: true, fingerprint: String(p['client-fingerprint']) };
+    } else if (p['reality-opts']) {
+        tls.utls = { enabled: true, fingerprint: "chrome" };
+    }
+
     if (p['reality-opts']) {
         tls.reality = {
             enabled: true,
@@ -254,6 +262,7 @@ function buildTlsObj(p) {
             short_id: p['reality-opts']['short-id'] ? String(p['reality-opts']['short-id']) : ''
         };
     }
+    
     return tls;
 }
 
