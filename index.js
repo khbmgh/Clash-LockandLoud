@@ -98,7 +98,6 @@ https://raw.githubusercontent.com/miladtahanian/V2RayCFGDumper/main/config.txt
 https://raw.githubusercontent.com/Mahdi0024/ProxyCollector/master/sub/proxies.txt
 https://raw.githubusercontent.com/youfoundamin/V2rayCollector/main/mixed_iran.txt
 `.split("\n").map(s => s.trim()).filter(Boolean))];
-
 // =====================================================
 // ۲. موتور اصلی
 // =====================================================
@@ -127,7 +126,7 @@ async function main() {
                     p.type = p.type.toLowerCase();
                     if (p.type === "shadowsocks") p.type = "ss";
                     if (p.type === "socks")       p.type = "socks5";
-                    if (p.type === "wg")           p.type = "wireguard";
+                    if (p.type === "wg")          p.type = "wireguard";
                 }
 
                 p = normalizeProxy(p);
@@ -136,7 +135,16 @@ async function main() {
 
                 if (valid(p) && p.type !== 'inline') cleaned.push(p);
             }
-            return cleaned;
+
+            // 🎲 شافل کردن و جدا کردن تصادفی کانفیگ‌ها از همین سورس
+            for (let i = cleaned.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cleaned[i], cleaned[j]] = [cleaned[j], cleaned[i]];
+            }
+            
+            // گرفتن نهایتاً ۲۵۰ عدد (یا کمتر اگر سورس کوچیک بود)
+            return cleaned.slice(0, 250); 
+
         } catch (e) {
             clearTimeout(timer);
             return [];
@@ -146,13 +154,14 @@ async function main() {
     const results = await Promise.allSettled(fetchPromises);
     results.forEach(r => { if (r.status === "fulfilled") allProxies.push(...r.value); });
 
-const unique = dedupe(allProxies);
-    console.log(`Total unique proxies collected: ${unique.length}`);
+    // حذف کانفیگ‌های تکراری در بین تمام سورس‌ها
+    const unique = dedupe(allProxies);
+    console.log(`Total unique proxies collected after per-source limits: ${unique.length}`);
     
-    // پراکسی‌های یکتا رو میدیم به فیلتر پینگ
-    const liveProxies = await filterLiveProxies(unique, 300);
+    // تست پینگ برای حذف مرده‌ها (با همزمانی ۸۰۰ برای سرعت بالا)
+    const liveProxies = await filterLiveProxies(unique, 800);
     
-    // حالا پراکسی‌های زنده رو برای تولید فایل می‌فرستیم
+    // ارسال کانفیگ‌های کاملاً زنده برای ساخت فایل نهایی
     generateFiles(liveProxies);
 }
 
@@ -1570,7 +1579,7 @@ function dedupe(list) {
 // =====================================================
 // سیستم تست پینگ (TCP Check)
 // =====================================================
-function checkTcp(host, port, timeout = 2500) {
+function checkTcp(host, port, timeout = 3500) {
     return new Promise((resolve) => {
         const socket = new net.Socket();
         let isAlive = false;
@@ -1586,23 +1595,21 @@ function checkTcp(host, port, timeout = 2500) {
         socket.on('error', () => socket.destroy());
         socket.on('close', () => resolve(isAlive));
 
-        // مدیریت فرمت آی‌پی‌های نسخه ۶
         const cleanHost = host.replace(/^\[|\]$/g, '');
         socket.connect(port, cleanHost);
     });
 }
 
-async function filterLiveProxies(proxies, concurrency = 300) {
+async function filterLiveProxies(proxies, concurrency = 800) {
     console.log(`\n🔍 Starting TCP Ping Check for ${proxies.length} proxies...`);
     const liveProxies = [];
     let checked = 0;
 
-    // تست موازی برای افزایش سرعت
     for (let i = 0; i < proxies.length; i += concurrency) {
         const chunk = proxies.slice(i, i + concurrency);
         const promises = chunk.map(async (p) => {
             if (p.server && p.port) {
-                const alive = await checkTcp(p.server, p.port, 2500); // تایم‌اوت ۲.۵ ثانیه
+                const alive = await checkTcp(p.server, p.port, 1500);
                 if (alive) liveProxies.push(p);
             }
         });
