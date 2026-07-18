@@ -18,13 +18,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
 
       - name: Install dependencies
         run: |
           npm install node-fetch@2
 
-      - name: Run Main Scraper
+      - name: Run Main Scraper & Ping Check
         run: node index.js
 
       - name: Run Converter (V2Ray + Sing-Box)
@@ -35,5 +35,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto Update: Scrape & Convert Proxies $(date)" || exit 0
+          git commit -m "Auto Update: Scrape, Ping & Convert Proxies $(date)" || exit 0
           git push
