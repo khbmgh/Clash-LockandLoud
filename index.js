@@ -1565,6 +1565,16 @@ function dedupe(list) {
 
 // =====================================================
 // ۱۲. تولید فایل‌های خروجی
+// =====================================================
+function normalizeTypeName(t) {
+    if (!t) return "unknown";
+    const s = t.toLowerCase();
+    if (s === "hysteria2") return "hy2";
+    if (s === "wireguard") return "wg";
+    if (s === "socks5")    return "socks";
+    return s;
+}
+
 function generateFiles(proxies) {
     const protocolOrder = {
         "hy2": 1, "vless": 2, "anytls": 3, "trojan": 4, "ss": 5,
