@@ -483,7 +483,7 @@ function buildSingboxConfig(outboundsRaw) {
             servers: [
                 { type: "https", tag: "resolver_dns", server: "8.8.8.8" },
                 { type: "local", tag: "local_dns" },
-                { type: "https", tag: "remote_dns", detour: "qqoli", server: "8.8.4.4" },
+                { type: "https", tag: "remote_dns", detour: "Mr_Fix", server: "8.8.4.4" },
                 {
                     type: "hosts",
                     tag: "hosts_dns",
@@ -512,8 +512,8 @@ function buildSingboxConfig(outboundsRaw) {
             { type: "mixed", tag: "mixed-in", listen: "127.0.0.1", listen_port: 7991 }
         ],
         outbounds: [
-            { type: "selector", tag: "qqoli", outbounds: ["mmobi", ...allTags] },
-            { type: "urltest", tag: "mmobi", outbounds: allTags, url: "https://www.gstatic.com/generate_204", interval: "6m0s" },
+            { type: "selector", tag: "Mr_Fix", outbounds: ["Mr_Fix-2", ...allTags] },
+            { type: "urltest", tag: "Mr_Fix-2", outbounds: allTags, url: "https://www.gstatic.com/generate_204", interval: "6m0s" },
             { type: "direct", tag: "direct" },
             ...outbounds
         ],
@@ -556,7 +556,7 @@ function buildSingboxConfig(outboundsRaw) {
                 { rule_set: "karing_geoip_ir", outbound: "direct" },
                 { ip_is_private: true, outbound: "direct" }
             ],
-            final: "qqoli", auto_detect_interface: true
+            final: "Mr_Fix", auto_detect_interface: true
         },
         experimental: { cache_file: { enabled: true } }
     };
