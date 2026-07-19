@@ -355,22 +355,37 @@ function ssToSingbox(p) {
     };
 
     if (p.plugin) {
-        out.plugin = p.plugin === 'obfs' ? 'obfs-local' : String(p.plugin);
-        if (p['plugin-opts']) {
-            out.plugin_opts = Object.entries(p['plugin-opts'])
-                .map(([k, v]) => {
-                    if (out.plugin === 'obfs-local') {
-                        if (k === 'mode') k = 'obfs';
-                        if (k === 'host') k = 'obfs-host';
-                    }
-                    return v === true ? k : `${k}=${v}`;
-                })
-                .join(";");
+        if (p.plugin === 'v2ray-plugin') {
+            // ترجمه v2ray-plugin به Transport و TLS برای سینگ‌باکس
+            const opts = p['plugin-opts'] || {};
+            if (opts.tls) {
+                out.tls = { enabled: true };
+                if (opts.host) out.tls.server_name = String(opts.host);
+                if (opts['skip-cert-verify']) out.tls.insecure = true;
+            }
+            if (opts.mode === 'websocket') {
+                out.transport = { type: 'ws' };
+                if (opts.path) out.transport.path = String(opts.path);
+                if (opts.host) out.transport.headers = { Host: String(opts.host) };
+            }
+        } else {
+            // سایر پلاگین‌ها (مثل obfs) با استاندارد SIP003
+            out.plugin = p.plugin === 'obfs' ? 'obfs-local' : String(p.plugin);
+            if (p['plugin-opts']) {
+                out.plugin_opts = Object.entries(p['plugin-opts'])
+                    .map(([k, v]) => {
+                        if (out.plugin === 'obfs-local') {
+                            if (k === 'mode') k = 'obfs';
+                            if (k === 'host') k = 'obfs-host';
+                        }
+                        return v === true ? k : `${k}=${v}`;
+                    })
+                    .join(";");
+            }
         }
     }
     return out;
 }
-
 function hy2ToSingbox(p) {
     const out = {
         tag: String(p.name), type: 'hysteria2',
