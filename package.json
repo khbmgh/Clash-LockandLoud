@@ -4,6 +4,7 @@
   "description": "Automated Proxy Scraper and Converter",
   "main": "index.js",
   "dependencies": {
+    "js-yaml": "^5.2.1",
     "node-fetch": "^2.7.0"
   }
 }
