@@ -1727,11 +1727,6 @@ const NESTED_OBJ_FIELDS = new Set([
     "reality-opts", "ech-opts", "ss-opts", "plugin-opts",
     "amnezia-wg-option", "smux", "httpmask", "jls-upstream"
 ]);
-const NESTED_OBJ_FIELDS = new Set([
-    "ws-opts", "h2-opts", "grpc-opts", "http-opts",
-    "reality-opts", "ech-opts", "ss-opts", "plugin-opts",
-    "amnezia-wg-option", "smux",
-]);
 
 const ARRAY_OF_OBJ_FIELDS = new Set(["peers"]);
 
