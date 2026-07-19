@@ -271,36 +271,32 @@ proxy-groups:
 
 # ================= Rule Providers =================
 rule-providers:
-  # لیست دامنه‌های ایرانی (سایت‌های داخلی)
-  karing_geosite_ir:
+  iran_ads:
     type: http
     behavior: domain
     format: mrs
-    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geosite-ir.mrs"
-    path: ./rule-providers/geosite-ir.mrs
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/raw/release/mrs/iran_ads.mrs"
+    path: ./rule-providers/iran_ads.mrs
     interval: 86400
 
-  # لیست آی‌پی‌های ایران
-  karing_geoip_ir:
+  iran_domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/raw/release/mrs/iran_domain.mrs"
+    path: ./rule-providers/iran_domain.mrs
+    interval: 86400
+
+  iran_ip:
     type: http
     behavior: ipcidr
     format: mrs
-    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geoip-ir.mrs"
-    path: ./rule-providers/geoip-ir.mrs
-    interval: 86400
-
-  # لیست تبلیغات ایرانی (برای مسدودسازی)
-  karing_ads_ir:
-    type: http
-    behavior: domain
-    format: mrs
-    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geosite-category-ads-ir.mrs"
-    path: ./rule-providers/ads-ir.mrs
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/raw/release/mrs/iran_ip.mrs"
+    path: ./rule-providers/iran_ip.mrs
     interval: 86400
 
 # ================= Rules =================
 rules:
-  # ۱. جلوگیری از نشت ترافیک لوکال
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
   - DOMAIN-SUFFIX,localhost,DIRECT
@@ -308,16 +304,16 @@ rules:
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
   - IP-CIDR,10.10.34.0/24,REJECT,no-resolve
 
-  # ۲. بلاک کردن تبلیغات (صرفه‌جویی در پهنای باند و سرعت)
-  - RULE-SET,karing_ads_ir,REJECT
+  # ۱. بلاک کردن تبلیغات و ترکرهای ایرانی
+  - RULE-SET,iran_ads,REJECT
 
-  # ۳. مسیردهی مستقیم دامنه‌های ایرانی
+  # ۲. دایرکت کردن سایت‌ها و دامنه‌های ایرانی
   - DOMAIN-SUFFIX,ir,DIRECT
-  - RULE-SET,karing_geosite_ir,DIRECT
+  - RULE-SET,iran_domain,DIRECT
 
-  # ۴. مسیردهی مستقیم آی‌پی‌های ایرانی (بدون نیاز به ریزالو مجدد)
-  - RULE-SET,karing_geoip_ir,DIRECT,no-resolve
-  - GEOIP,IR,DIRECT
+  # ۳. دایرکت کردن آی‌پی‌های ایران (بدون درگیری DNS خارجی)
+  - RULE-SET,iran_ip,DIRECT,no-resolve
+  - GEOIP,IR,DIRECT,no-resolve
 
-  # ۵. ارسال مابقی ترافیک به سمت پروکسی
+  # ۴. انتقال مابقی ترافیک (سایت‌های خارجی) به گروه پروکسی اصلی
   - MATCH,🚀 MR_Afxoni_Main
