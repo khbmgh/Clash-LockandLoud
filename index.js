@@ -1,6 +1,7 @@
 const fs    = require('fs');
 const fetch = require('node-fetch');
-const net   = require('net'); // این خط رو اضافه کن
+const net   = require('net');
+const yaml  = require('js-yaml');// این خط رو اضافه کن
 // =====================================================
 // ۱. تنظیمات
 // =====================================================
@@ -405,160 +406,36 @@ function parseXrayOutbounds(outbounds) {
 // =====================================================
 // ۷. YAML Parser — با پشتیبانی از nested objects
 // =====================================================
+// =====================================================
+// ۷. YAML Parser — با استفاده از js-yaml (ضدگلوله)
+// =====================================================
 function extractYamlConfigs(text) {
-    const proxies   = [];
-    let current     = null;
-    let nestedStack = [];
-    // کلیدهایی که مقدارشان array است
-    const knownListKeys = new Set(["allowed-ips", "dns", "alpn", "peers", "host"]);
-
-    function flushCurrent() {
-        if (current && current.type && current.server) proxies.push(current);
-    }
-
-    for (const line of text.split(/\r?\n/)) {
-        if (line.trim().startsWith('#')) continue;
-
-        const listMatch = line.match(/^(\s*)-\s*(.*)$/);
-        if (listMatch) {
-            const indent    = listMatch[1].length;
-            const remainder = listMatch[2].trim();
-
-            // آیا این آیتم به یه لیست nested تعلق داره؟
-            if (current && nestedStack.length > 0) {
-                const top = nestedStack[nestedStack.length - 1];
-                if (indent > top.indent && Array.isArray(top.value)) {
-                    if (remainder.startsWith('{')) {
-                        const inlineObj = parseInlineYaml(remainder);
-                        if (inlineObj) top.value.push(inlineObj);
-                    } else if (remainder) {
-                        top.value.push(parseYamlValue(remainder));
+    const proxies = [];
+    try {
+        // loadAll کمک می‌کنه اگه چند تا داکیومنت با --- جدا شده باشن همه‌شون خونده بشن
+        yaml.loadAll(text, function (doc) {
+            if (!doc || typeof doc !== 'object') return;
+            
+            if (Array.isArray(doc.proxies)) {
+                proxies.push(...doc.proxies);
+            } else if (Array.isArray(doc)) {
+                proxies.push(...doc.filter(i => i && i.type && i.server));
+            } else if (doc.type && doc.server) {
+                proxies.push(doc);
+            } else {
+                // گشتن تو کلیدهای دیگه اگه کانفیگ ساختار متفاوتی داشت
+                for (const key in doc) {
+                    if (Array.isArray(doc[key])) {
+                        const possibleProxies = doc[key].filter(i => i && i.type && i.server);
+                        proxies.push(...possibleProxies);
                     }
-                    continue;
                 }
             }
-
-            // شروع proxy جدید
-            flushCurrent();
-            current     = {};
-            nestedStack = [];
-
-            if (remainder.startsWith('{')) {
-                const p = parseInlineYaml(remainder);
-                if (p) proxies.push(p);
-                current = null;
-            } else if (remainder) {
-                const kv = remainder.match(/^([a-zA-Z0-9_\-\.]+)\s*:\s*(.*)$/);
-                if (kv) current[kv[1]] = parseYamlValue(kv[2]);
-            }
-            continue;
-        }
-
-        if (!current) continue;
-
-        const indent      = line.match(/^(\s*)/)[1].length;
-        const trimmedLine = line.trim();
-        if (!trimmedLine) continue;
-
-        // بررسی که آیا از یه nested block خارج شدیم
-        while (nestedStack.length > 0 && indent <= nestedStack[nestedStack.length - 1].indent) {
-            nestedStack.pop();
-        }
-
-        // لیست nested (- item داخل یه key)
-        const nestedListItem = trimmedLine.match(/^-\s+(.*)$/);
-        if (nestedListItem && nestedStack.length > 0) {
-            const top = nestedStack[nestedStack.length - 1];
-            if (Array.isArray(top.value)) {
-                const itemVal = nestedListItem[1].trim();
-                if (itemVal.startsWith('{')) {
-                    const inlineObj = parseInlineYaml(itemVal);
-                    if (inlineObj) top.value.push(inlineObj);
-                } else if (itemVal) {
-                    top.value.push(parseYamlValue(itemVal));
-                }
-                continue;
-            }
-        }
-
-        // key: (بدون value — nested block)
-        const nestedKeyOnly = line.match(/^(\s+)([a-zA-Z0-9_\-\.]+)\s*:\s*$/);
-        if (nestedKeyOnly) {
-            const key    = nestedKeyOnly[2];
-            const isArr  = knownListKeys.has(key);
-            const newVal = isArr ? [] : {};
-
-            if (nestedStack.length === 0) {
-                current[key] = newVal;
-                nestedStack.push({ key, indent, value: newVal });
-            } else {
-                const top = nestedStack[nestedStack.length - 1];
-                if (typeof top.value === 'object' && !Array.isArray(top.value)) {
-                    top.value[key] = newVal;
-                    nestedStack.push({ key, indent, value: newVal });
-                }
-            }
-            continue;
-        }
-
-        // key: value (معمولی)
-        const kv = line.match(/^(\s+)([a-zA-Z0-9_\-\.]+)\s*:\s*(.+)$/);
-        if (kv) {
-            const key = kv[2];
-            const val = parseYamlValue(kv[3]);
-
-            if (nestedStack.length > 0) {
-                const top = nestedStack[nestedStack.length - 1];
-                if (typeof top.value === 'object' && !Array.isArray(top.value)) {
-                    top.value[key] = val;
-                }
-            } else {
-                current[key] = val;
-            }
-        }
+        });
+    } catch (e) {
+        // نادیده گرفتن خطاهای پارس در صورت نامعتبر بودن متن
     }
-
-    flushCurrent();
     return proxies;
-}
-
-function parseInlineYaml(str) {
-    str = str.trim();
-    if (!str.startsWith('{') || !str.endsWith('}')) return null;
-    str = str.slice(1, -1);
-    const result = {};
-    let currentKey = "", currentValue = "", inKey = true, depth = 0, inQuote = false, quoteChar = '';
-    for (let i = 0; i < str.length; i++) {
-        const char = str[i];
-        if (char === '"' || char === "'") {
-            if (!inQuote) { inQuote = true; quoteChar = char; }
-            else if (quoteChar === char) inQuote = false;
-        }
-        if (!inQuote) {
-            if (char === '{' || char === '[') depth++;
-            if (char === '}' || char === ']') depth--;
-            if (char === ':' && inKey && depth === 0) { inKey = false; continue; }
-            if (char === ',' && !inKey && depth === 0) {
-                if (currentKey.trim()) result[currentKey.trim()] = parseYamlValue(currentValue.trim());
-                currentKey = ""; currentValue = ""; inKey = true; continue;
-            }
-        }
-        if (inKey) currentKey += char; else currentValue += char;
-    }
-    if (currentKey.trim()) result[currentKey.trim()] = parseYamlValue(currentValue.trim());
-    return result;
-}
-
-function parseYamlValue(val) {
-    if (typeof val !== 'string') return val;
-    val = val.trim();
-    if (val === 'true')  return true;
-    if (val === 'false') return false;
-    if (/^[0-9]+$/.test(val)) return Number(val);
-    if (val.startsWith('{') && val.endsWith('}')) return parseInlineYaml(val);
-    if (val.startsWith('[') && val.endsWith(']'))
-        return val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, ''));
-    return val.replace(/^["']|["']$/g, '');
 }
 
 // =====================================================
