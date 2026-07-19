@@ -32,11 +32,9 @@ dns:
 
   respect-rules: true
 
-
   proxy-server-nameserver:
     - https://8.8.8.8/dns-query       # Google DoH — IP
     - https://1.1.1.1/dns-query       # Cloudflare DoH — IP
-
 
   default-nameserver:
     - 8.8.8.8
@@ -51,17 +49,14 @@ dns:
       - https://dns.arvancloud.ir/dns-query
       - 178.22.122.100
 
-
   nameserver:
     - https://94.140.14.14/dns-query  # AdGuard DoH — IP 
     - https://8.8.8.8/dns-query       # Google DoH — IP 
-
 
   fallback:
     - https://1.0.0.1/dns-query       
     - tls://9.9.9.9                  
     - tls://8.8.4.4                  
-
 
   fallback-filter:
     geoip: true
@@ -110,10 +105,10 @@ proxy-groups:
     type: select
     proxies:
       - 🔍 All-Speed-Test
-#      - 🚀 Hy2-Speed-Test
-#      - ⚡ V2ray-Speed-Test
-#      - 🛡️ Non-V2ray-Speed-Test
       - 🛠️ Manual-Protocol-Selection
+      - 🧩 Sudoku-Speed-Test
+      - 👁️ Mieru-Speed-Test
+      - 💨 ShadowQUIC-Speed-Test
       - 🟣 VLESS-Speed-Test
       - 🔵 VMESS-Speed-Test
       - 🟠 Hysteria2-Speed-Test
@@ -136,36 +131,36 @@ proxy-groups:
     lazy: true
     use: [Mr_afxoni_All]
 
-#  - name: 🚀 Hy2-Speed-Test
-#    type: url-test
-#    url: https://cp.cloudflare.com/generate_204
-#    interval: 1800
-#    tolerance: 100
-#    lazy: true
-#    use: [Mr_afxoni_HY2]
-
-#  - name: ⚡ V2ray-Speed-Test
-#    type: url-test
-#    url: https://cp.cloudflare.com/generate_204
-#    interval: 1800
-#    tolerance: 100
-#    lazy: true
-#    use: [Mr_afxoni_All]
-#    filter: "(?i)vless|vmess"
-
-#  - name: 🛡️ Non-V2ray-Speed-Test
-#    type: url-test
-#    url: https://cp.cloudflare.com/generate_204
-#    interval: 1800
-#    tolerance: 100
-#    lazy: true
-#    use: [Mr_afxoni_All]
-#    filter: "^(?!.*(?i)(vless|hy2|vmess)).*(?i)(anytls|trojan|ss|wg|tuic|http|socks|ssh)"
-
-
   - name: 🛠️ Manual-Protocol-Selection
     type: select
     use: [Mr_afxoni_All]
+
+  - name: 🧩 Sudoku-Speed-Test
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 1800
+    tolerance: 100
+    lazy: true
+    use: [Mr_afxoni_All]
+    filter: "(?i)sudoku"
+
+  - name: 👁️ Mieru-Speed-Test
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 1800
+    tolerance: 100
+    lazy: true
+    use: [Mr_afxoni_All]
+    filter: "(?i)mieru"
+
+  - name: 💨 ShadowQUIC-Speed-Test
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 1800
+    tolerance: 100
+    lazy: true
+    use: [Mr_afxoni_All]
+    filter: "(?i)shadowquic"
 
   - name: 🟣 VLESS-Speed-Test
     type: url-test
@@ -246,7 +241,7 @@ proxy-groups:
     tolerance: 100
     lazy: true
     use: [Mr_afxoni_All]
-    filter: "(?i)\bhttp\b|\bsocks\b|\bssh\b"
+    filter: "(?i)\\bhttp\\b|\\bsocks\\b|\\bssh\\b"
 
   - name: ⚖️ Worker-Load-Balance
     type: load-balance
@@ -312,19 +307,14 @@ rules:
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
   - IP-CIDR,10.10.34.0/24,REJECT,no-resolve
 
-
   - RULE-SET,ads,REJECT
-
 
   - DOMAIN-SUFFIX,ir,DIRECT
   - RULE-SET,iran_domain,DIRECT
 
-
   - RULE-SET,iran_ip,DIRECT,no-resolve
   - GEOIP,IR,DIRECT
 
-
   - RULE-SET,other_rules,🚀 MR_Afxoni_Main
-
 
   - MATCH,🚀 MR_Afxoni_Main
