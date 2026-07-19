@@ -795,10 +795,11 @@ function parseSS(link) {
     const tag     = hashIdx >= 0 ? raw.substring(hashIdx + 1) : "";
 
     // جدا کردن query string
-    const qIdx    = base.indexOf('?');
-    const baseNoQ = qIdx >= 0 ? base.substring(0, qIdx) : base;
+const qIdx    = base.indexOf('?');
+    let baseNoQ   = qIdx >= 0 ? base.substring(0, qIdx) : base;
+    if (baseNoQ.endsWith('/')) baseNoQ = baseNoQ.slice(0, -1);
     const query   = qIdx >= 0 ? base.substring(qIdx + 1) : "";
-
+    
     let method, password, server, port;
 
     if (baseNoQ.includes("@")) {
@@ -1222,7 +1223,7 @@ function normalizeProxy(p) {
     // username/password خالی
     if (p.username !== undefined && (p.username === "" || p.username === null)) delete p.username;
     if (p.password !== undefined && (p.password === "" || p.password === null)) {
-        if (!["trojan","hysteria2","anytls","tuic","ss"].includes(p.type)) {
+        if (!["trojan","hysteria2","anytls","tuic","ss","mieru","shadowquic"].includes(p.type)) {
             delete p.password;
         }
     }
@@ -1557,6 +1558,16 @@ function valid(p) {
         case "socks5":
             break;
         // ssh, ssr, http — کاملاً حذف شده
+        case "mieru":
+            if (!p.username || !p.password) return false;
+            break;
+        case "sudoku":
+            if (!p.key) return false;
+            break;
+        case "shadowquic":
+            if (!p.password) return false;
+            break;
+            
         default:
             return false;
     }
@@ -1704,8 +1715,18 @@ const PROTO_FIELDS = {
                 "max-udp-relay-packet-size", "fast-open", "max-open-streams",
                 "sni", "alpn", "skip-cert-verify", "fingerprint"],
     socks5:    ["username", "password", "tls", "skip-cert-verify", "fingerprint"],
+    
+    // --- پروتکل‌های اضافه‌شده ---
+    mieru:     ["username", "password", "port-range", "transport", "multiplexing", "handshake-mode", "traffic-pattern", "user-hint-is-mandatory"],
+    sudoku:    ["key", "aead-method", "padding-min", "padding-max", "table-type", "custom-table", "custom-tables", "multiplex", "httpmask", "enable-pure-downlink", "handshake-timeout", "fallback"],
+    shadowquic: ["username", "password", "sni", "alpn", "quic-versions", "udp-over-stream", "zero-rtt", "keep-alive-interval", "congestion-controller", "up", "down", "cwnd", "bbr-profile", "max-datagram-frame-size", "max-open-streams", "recv-window-conn", "recv-window", "disable-mtu-discovery", "jls-upstream"],
 };
 
+const NESTED_OBJ_FIELDS = new Set([
+    "ws-opts", "h2-opts", "grpc-opts", "http-opts",
+    "reality-opts", "ech-opts", "ss-opts", "plugin-opts",
+    "amnezia-wg-option", "smux", "httpmask", "jls-upstream"
+]);
 const NESTED_OBJ_FIELDS = new Set([
     "ws-opts", "h2-opts", "grpc-opts", "http-opts",
     "reality-opts", "ech-opts", "ss-opts", "plugin-opts",
