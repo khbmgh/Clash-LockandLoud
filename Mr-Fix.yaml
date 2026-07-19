@@ -271,35 +271,36 @@ proxy-groups:
 
 # ================= Rule Providers =================
 rule-providers:
-  ads:
+  # لیست دامنه‌های ایرانی (سایت‌های داخلی)
+  karing_geosite_ir:
     type: http
     behavior: domain
     format: mrs
-    url: https://raw.githubusercontent.com/liketolivefree/kobabi/main/aff_l.mrs
-    path: ./rule-providers/ads.mrs
-  iran_ip:
+    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geosite-ir.mrs"
+    path: ./rule-providers/geosite-ir.mrs
+    interval: 86400
+
+  # لیست آی‌پی‌های ایران
+  karing_geoip_ir:
     type: http
     behavior: ipcidr
     format: mrs
-    url: https://raw.githubusercontent.com/liketolivefree/kobabi/main/yun.mrs
-    path: ./rule-providers/iran_ip.mrs
-  iran_domain:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://raw.githubusercontent.com/liketolivefree/kobabi/main/xal.mrs
-    path: ./rule-providers/iran_domain.mrs
-  other_rules:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://raw.githubusercontent.com/liketolivefree/kobabi/main/oki.mrs
-    path: ./rule-providers/other_rules.mrs
+    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geoip-ir.mrs"
+    path: ./rule-providers/geoip-ir.mrs
+    interval: 86400
 
+  # لیست تبلیغات ایرانی (برای مسدودسازی)
+  karing_ads_ir:
+    type: http
+    behavior: domain
+    format: mrs
+    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/mihomo/geosite-category-ads-ir.mrs"
+    path: ./rule-providers/ads-ir.mrs
+    interval: 86400
 
 # ================= Rules =================
 rules:
-
+  # ۱. جلوگیری از نشت ترافیک لوکال
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
   - DOMAIN-SUFFIX,localhost,DIRECT
@@ -307,14 +308,16 @@ rules:
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
   - IP-CIDR,10.10.34.0/24,REJECT,no-resolve
 
-  - RULE-SET,ads,REJECT
+  # ۲. بلاک کردن تبلیغات (صرفه‌جویی در پهنای باند و سرعت)
+  - RULE-SET,karing_ads_ir,REJECT
 
+  # ۳. مسیردهی مستقیم دامنه‌های ایرانی
   - DOMAIN-SUFFIX,ir,DIRECT
-  - RULE-SET,iran_domain,DIRECT
+  - RULE-SET,karing_geosite_ir,DIRECT
 
-  - RULE-SET,iran_ip,DIRECT,no-resolve
+  # ۴. مسیردهی مستقیم آی‌پی‌های ایرانی (بدون نیاز به ریزالو مجدد)
+  - RULE-SET,karing_geoip_ir,DIRECT,no-resolve
   - GEOIP,IR,DIRECT
 
-  - RULE-SET,other_rules,🚀 MR_Afxoni_Main
-
+  # ۵. ارسال مابقی ترافیک به سمت پروکسی
   - MATCH,🚀 MR_Afxoni_Main
