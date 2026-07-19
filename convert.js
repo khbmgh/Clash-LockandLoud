@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const yaml = require('js-yaml');
 // =====================================================
 // convert.js — تبدیل all.yaml به فرمت‌های V2Ray و Sing-Box
 // ورودی: all.yaml (خروجی aggregator)
@@ -10,78 +10,15 @@ const fs = require('fs');
 // =====================================================
 
 // ── ۱. خواندن و parse ساده YAML proxies ──────────────────
+// ── ۱. خواندن و parse دقیق YAML proxies با js-yaml ──────────
 function parseProxiesYaml(text) {
-    const proxies = [];
-    let current = null;
-    let currentNestedKey = null;
-    let currentNestedIndent = 0;
-    const knownListKeys = new Set(["allowed-ips", "dns", "alpn", "peers", "reserved", "host"]);
-
-    for (const rawLine of text.split(/\r?\n/)) {
-        const line = rawLine;
-        if (line.trim().startsWith('#')) continue;
-
-        // شروع آیتم جدید با "  - name:"
-        const listMatch = line.match(/^(\s*)-\s+name:\s*(.*)$/);
-        if (listMatch) {
-            if (current) proxies.push(current);
-            current = { name: stripQuotes(listMatch[2].trim()) };
-            currentNestedKey = null;
-            currentNestedIndent = 0;
-            continue;
-        }
-
-        if (!current) continue;
-
-        // آیتم آرایه
-        const arrItem = line.match(/^(\s+)-\s+(.*)$/);
-        if (arrItem && currentNestedKey) {
-            const indent = arrItem[1].length;
-            if (indent > currentNestedIndent) {
-                if (!Array.isArray(current[currentNestedKey])) current[currentNestedKey] = [];
-                current[currentNestedKey].push(parseYamlScalar(arrItem[2].trim()));
-                continue;
-            }
-        }
-
-        // key: value
-        const kv = line.match(/^(\s+)([a-zA-Z0-9_\-]+):\s*(.*)$/);
-        if (!kv) continue;
-        const indent = kv[1].length;
-        const key = kv[2];
-        const valStr = kv[3].trim();
-
-        if (valStr === '') {
-            currentNestedKey = key;
-            currentNestedIndent = indent;
-            if (knownListKeys.has(key)) current[key] = [];
-            else current[key] = {};
-        } else if (currentNestedKey && indent > currentNestedIndent && typeof current[currentNestedKey] === 'object' && !Array.isArray(current[currentNestedKey])) {
-            current[currentNestedKey][key] = parseYamlScalar(valStr);
-        } else {
-            currentNestedKey = null;
-            current[key] = parseYamlScalar(valStr);
-        }
+    try {
+        const doc = yaml.load(text);
+        return doc && doc.proxies ? doc.proxies : [];
+    } catch (err) {
+        console.error("❌ YAML Parse Error:", err.message);
+        return [];
     }
-    if (current) proxies.push(current);
-    return proxies;
-}
-
-function parseYamlScalar(v) {
-    if (!v || v === '') return v;
-    v = stripQuotes(v);
-    if (v === 'true') return true;
-    if (v === 'false') return false;
-    if (/^-?\d+$/.test(v)) return Number(v);
-    return v;
-}
-
-function stripQuotes(s) {
-    if (!s) return s;
-    s = s.trim();
-    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'")))
-        return s.slice(1, -1);
-    return s;
 }
 
 // ── ۲. تبدیل به URI لینک ─────────────────────────────────
