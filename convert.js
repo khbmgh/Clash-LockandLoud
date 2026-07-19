@@ -402,6 +402,7 @@ function sshToSingbox(p) {
     return out;
 }
 // ── ۴. ساخت فایل کامل Sing-Box (بدون بن‌بست و ارور) ─────────
+// ── ۴. ساخت فایل کامل Sing-Box (حالت Global و بدون Rule Set) ─────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -425,13 +426,13 @@ function buildSingboxConfig(outboundsRaw) {
                 },
                 { 
                     tag: "local_dns", 
-                    type: "udp", // تغییر به UDP برای جلوگیری از خطای TLS روی آی‌پی خام
+                    type: "udp", 
                     server: "178.22.122.100" 
                 }
             ],
             rules: [
-                { domain_suffix: [".ir"], server: "local_dns" },
-                { rule_set: "karing_geosite_ir", server: "local_dns" }
+                // فقط دامنه‌های ملی با پسوند ir رو به DNS داخلی می‌دیم
+                { domain_suffix: [".ir"], server: "local_dns" }
             ],
             final: "remote_dns",
             strategy: "prefer_ipv4"
@@ -453,24 +454,6 @@ function buildSingboxConfig(outboundsRaw) {
             ...outbounds
         ],
         route: {
-            rule_set: [
-                {
-                    type: "remote", tag: "karing_geosite_ir", format: "binary",
-                    // استفاده از CDN بدون فیلتر به جای دامنه مسدود گیت‌هاب
-                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geosite-ir.srs",
-                    download_detour: "direct"
-                },
-                {
-                    type: "remote", tag: "karing_geoip_ir", format: "binary",
-                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geoip-ir.srs",
-                    download_detour: "direct"
-                },
-                {
-                    type: "remote", tag: "karing_ads_ir", format: "binary",
-                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geosite-category-ads-ir.srs",
-                    download_detour: "direct"
-                }
-            ],
             rules: [
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
@@ -478,17 +461,11 @@ function buildSingboxConfig(outboundsRaw) {
                 { port: 53, action: "hijack-dns" },
                 { ip_cidr: ["10.10.34.0/24"], action: "reject" },
                 
-                // بلاک کردن تبلیغات ایرانی
-                { rule_set: "karing_ads_ir", action: "reject" },
-                
-                // مسیردهی مستقیم دامنه‌های ایرانی (سایت‌های داخلی)
+                // دایرکت کردن سایت‌های پسوند ir و آی‌پی‌های داخلی مودم
                 { domain_suffix: [".ir"], outbound: "direct" },
-                { rule_set: "karing_geosite_ir", outbound: "direct" },
-                
-                // مسیردهی مستقیم آی‌پی‌های ایرانی
-                { rule_set: "karing_geoip_ir", outbound: "direct" },
                 { ip_is_private: true, outbound: "direct" }
             ],
+            // مابقی ترافیک مستقیم وارد پروکسی میشه
             final: "Mr_Fix", auto_detect_interface: true
         },
         experimental: { cache_file: { enabled: true } }
