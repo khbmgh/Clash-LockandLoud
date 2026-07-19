@@ -401,7 +401,7 @@ function sshToSingbox(p) {
     if (p.password) out.password = String(p.password);
     return out;
 }
-// ── ۴. ساخت فایل کامل Sing-Box (مطابق با داکیومنت رسمی) ─────────
+// ── ۴. ساخت فایل کامل Sing-Box (بدون بن‌بست و ارور) ─────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -420,13 +420,13 @@ function buildSingboxConfig(outboundsRaw) {
                 { 
                     tag: "remote_dns", 
                     type: "https", 
-                    server: "8.8.8.8", // فقط IP (سینگ‌باکس پورت 443 و مسیر /dns-query رو پیش‌فرض خودش می‌سازه)
+                    server: "https://8.8.8.8/dns-query", 
                     detour: "Mr_Fix" 
                 },
                 { 
                     tag: "local_dns", 
-                    type: "https", 
-                    server: "178.22.122.100" // آی‌پی سرور DNS آروان 
+                    type: "udp", // تغییر به UDP برای جلوگیری از خطای TLS روی آی‌پی خام
+                    server: "178.22.122.100" 
                 }
             ],
             rules: [
@@ -456,16 +456,19 @@ function buildSingboxConfig(outboundsRaw) {
             rule_set: [
                 {
                     type: "remote", tag: "karing_geosite_ir", format: "binary",
-                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geosite-ir.srs"
-                    // حذف download_detour تا برای آپدیت فایل‌ها از گیت‌هابِ فیلترشده، از مسیر پروکسی (Mr_Fix) بره
+                    // استفاده از CDN بدون فیلتر به جای دامنه مسدود گیت‌هاب
+                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geosite-ir.srs",
+                    download_detour: "direct"
                 },
                 {
                     type: "remote", tag: "karing_geoip_ir", format: "binary",
-                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geoip-ir.srs"
+                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geoip-ir.srs",
+                    download_detour: "direct"
                 },
                 {
                     type: "remote", tag: "karing_ads_ir", format: "binary",
-                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geosite-category-ads-ir.srs"
+                    url: "https://testingcf.jsdelivr.net/gh/KaringX/Iran-sing-box-rules@rule-set/geosite-category-ads-ir.srs",
+                    download_detour: "direct"
                 }
             ],
             rules: [
