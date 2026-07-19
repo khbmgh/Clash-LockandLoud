@@ -403,6 +403,7 @@ function sshToSingbox(p) {
     return out;
 }
 // ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
+// ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -418,22 +419,14 @@ function buildSingboxConfig(outboundsRaw) {
         log: { level: "warn" },
         dns: {
             servers: [
-                { type: "https", tag: "resolver_dns", server: "8.8.8.8" },
-                { type: "local", tag: "local_dns" },
-                { type: "https", tag: "remote_dns", detour: "Mr_Fix", server: "8.8.4.4" },
-                {
-                    type: "hosts",
-                    tag: "hosts_dns",
-                    predefined: {
-                        "localhost": ["127.0.0.1", "::1"],
-                        "security.cloudflare-dns.com": ["1.0.0.2", "1.1.1.2", "2606:4700:4700::1002", "2606:4700:4700::1112"],
-                        "cloudflare-dns.com": ["104.16.248.249", "104.16.249.249", "2606:4700::6810:f8f9", "2606:4700::6810:f9f9"],
-                        "dns.google": ["8.8.4.4", "8.8.8.8", "2001:4860:4860::8844", "2001:4860:4860::8888"]
-                    }
-                }
+                { type: "https", tag: "remote_dns", detour: "Mr_Fix", server: "https://8.8.8.8/dns-query" },
+                { type: "https", tag: "local_dns", detour: "direct", server: "https://dns.arvancloud.ir/dns-query" },
+                { type: "rcode", tag: "block_dns", rcode: "name_error" }
             ],
             rules: [
-                { domain: ["security.cloudflare-dns.com"], server: "hosts_dns" }
+                { rule_set: "karing_ads_ir", server: "block_dns" },
+                { domain_suffix: [".ir"], server: "local_dns" },
+                { rule_set: "karing_geosite_ir", server: "local_dns" }
             ],
             final: "remote_dns",
             strategy: "prefer_ipv4"
@@ -473,11 +466,8 @@ function buildSingboxConfig(outboundsRaw) {
                 }
             ],
             rules: [
-                { domain: ["security.cloudflare-dns.com"], action: "resolve" },
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
-                { inbound: "tun-in", action: "resolve" },
-                { inbound: "mixed-in", action: "resolve" },
                 { protocol: "dns", action: "hijack-dns" },
                 { port: 53, action: "hijack-dns" },
                 { ip_cidr: ["10.10.34.0/24"], action: "reject" },
