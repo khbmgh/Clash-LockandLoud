@@ -9,7 +9,6 @@ const yaml = require('js-yaml');
 //   singbox.json        — فایل کامل sing-box
 // =====================================================
 
-// ── ۱. خواندن و parse ساده YAML proxies ──────────────────
 // ── ۱. خواندن و parse دقیق YAML proxies با js-yaml ──────────
 function parseProxiesYaml(text) {
     try {
@@ -403,6 +402,7 @@ function sshToSingbox(p) {
     return out;
 }
 // ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
+// ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -419,7 +419,8 @@ function buildSingboxConfig(outboundsRaw) {
         dns: {
             servers: [
                 { type: "https", tag: "remote_dns", detour: "Mr_Fix", server: "https://8.8.8.8/dns-query" },
-                { type: "https", tag: "local_dns", detour: "direct", server: "https://dns.arvancloud.ir/dns-query" }
+                // عبارت detour: "direct" از اینجا حذف شد تا سینگ‌باکس ارور نده
+                { type: "https", tag: "local_dns", server: "https://dns.arvancloud.ir/dns-query" }
             ],
             rules: [
                 { domain_suffix: [".ir"], server: "local_dns" },
