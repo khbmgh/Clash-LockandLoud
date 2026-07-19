@@ -518,6 +518,23 @@ function buildSingboxConfig(outboundsRaw) {
             ...outbounds
         ],
         route: {
+            rule_set: [
+                {
+                    type: "remote", tag: "karing_geosite_ir", format: "binary",
+                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geosite-ir.srs",
+                    download_detour: "direct"
+                },
+                {
+                    type: "remote", tag: "karing_geoip_ir", format: "binary",
+                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geoip-ir.srs",
+                    download_detour: "direct"
+                },
+                {
+                    type: "remote", tag: "karing_ads_ir", format: "binary",
+                    url: "https://raw.githubusercontent.com/KaringX/Iran-sing-box-rules/rule-set/geosite-category-ads-ir.srs",
+                    download_detour: "direct"
+                }
+            ],
             rules: [
                 { domain: ["security.cloudflare-dns.com"], action: "resolve" },
                 { inbound: "tun-in", action: "sniff" },
@@ -527,8 +544,17 @@ function buildSingboxConfig(outboundsRaw) {
                 { protocol: "dns", action: "hijack-dns" },
                 { port: 53, action: "hijack-dns" },
                 { ip_cidr: ["10.10.34.0/24"], action: "reject" },
-                { ip_is_private: true, outbound: "direct" },
-                { domain_suffix: ".ir", outbound: "direct" }
+                
+                // بلاک کردن تبلیغات ایرانی
+                { rule_set: "karing_ads_ir", action: "reject" },
+                
+                // مسیردهی مستقیم دامنه‌های ایرانی (سایت‌های داخلی)
+                { domain_suffix: [".ir"], outbound: "direct" },
+                { rule_set: "karing_geosite_ir", outbound: "direct" },
+                
+                // مسیردهی مستقیم آی‌پی‌های ایرانی
+                { rule_set: "karing_geoip_ir", outbound: "direct" },
+                { ip_is_private: true, outbound: "direct" }
             ],
             final: "qqoli", auto_detect_interface: true
         },
