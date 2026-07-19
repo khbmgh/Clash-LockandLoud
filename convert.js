@@ -403,7 +403,6 @@ function sshToSingbox(p) {
     return out;
 }
 // ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
-// ── ۴. ساخت فایل کامل Sing-Box ───────────────────────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -420,11 +419,9 @@ function buildSingboxConfig(outboundsRaw) {
         dns: {
             servers: [
                 { type: "https", tag: "remote_dns", detour: "Mr_Fix", server: "https://8.8.8.8/dns-query" },
-                { type: "https", tag: "local_dns", detour: "direct", server: "https://dns.arvancloud.ir/dns-query" },
-                { type: "rcode", tag: "block_dns", rcode: "name_error" }
+                { type: "https", tag: "local_dns", detour: "direct", server: "https://dns.arvancloud.ir/dns-query" }
             ],
             rules: [
-                { rule_set: "karing_ads_ir", server: "block_dns" },
                 { domain_suffix: [".ir"], server: "local_dns" },
                 { rule_set: "karing_geosite_ir", server: "local_dns" }
             ],
