@@ -496,12 +496,10 @@ function buildSingboxConfig(outboundsRaw) {
                 }
             ],
             rules: [
-                { domain: ["security.cloudflare-dns.com"], server: "hosts_dns" },
-                { ip_accept_any: true, server: "hosts_dns" }
+                { domain: ["security.cloudflare-dns.com"], server: "hosts_dns" }
             ],
             final: "remote_dns",
-            strategy: "prefer_ipv4",
-            independent_cache: true
+            strategy: "prefer_ipv4"
         },
         endpoints: endpoints.length > 0 ? endpoints : undefined,
         inbounds: [
@@ -532,7 +530,7 @@ function buildSingboxConfig(outboundsRaw) {
                 { ip_is_private: true, outbound: "direct" },
                 { domain_suffix: ".ir", outbound: "direct" }
             ],
-            final: "qqoli", auto_detect_interface: true, default_domain_resolver: "resolver_dns"
+            final: "qqoli", auto_detect_interface: true
         },
         experimental: { cache_file: { enabled: true } }
     };
