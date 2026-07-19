@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install node-fetch@2
+          npm install node-fetch@2 js-yaml
 
       - name: Run Main Scraper & Ping Check
         run: node index.js
