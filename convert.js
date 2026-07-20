@@ -465,11 +465,6 @@ function buildSingboxConfig(outboundsRaw) {
                         "security.cloudflare-dns.com": [
                             "1.0.0.2", "1.1.1.2", "2606:4700:4700::1002", "2606:4700:4700::1112"
                         ]
-                        // ── حذف شد: github.com, github.githubassets.com, avatars.githubusercontent.com,
-                        //    release-assets.githubusercontent.com — بدون reference در این کانفیگ
-                        // ── حذف شد: quad9 (تمام subdomainها), adguard-dns.com, opendns.com,
-                        //    sse.cisco.com, umbrella.com, doh.*, cloudflare-dns.com —
-                        //    هیچ‌کدام در dns.servers به‌عنوان server استفاده نشده‌اند
                     }
                 }
             ],
@@ -521,11 +516,6 @@ function buildSingboxConfig(outboundsRaw) {
                         "2001:4188:2:600:10:10:34:34/127",
                         "2001:4188:2:600:10:10:34:36/128"
                     ],
-                    action: "reject"
-                },
-                {
-                    network: "udp",
-                    port: 443,
                     action: "reject"
                 },
                 { ip_is_private: true, outbound: "direct" }
