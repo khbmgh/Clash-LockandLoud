@@ -1,5 +1,6 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
+
 // =====================================================
 // convert.js — تبدیل all.yaml به فرمت‌های V2Ray و Sing-Box
 // ورودی: all.yaml (خروجی aggregator)
@@ -212,7 +213,6 @@ function buildTlsObj(p) {
             public_key: String(p['reality-opts']['public-key'] || '')
         };
 
-        // شرط جدید: فقط اگه short_id معتبر و زوج بود اضافه بشه
         if (shortId.length > 0 && shortId.length % 2 === 0) {
             tls.reality.short_id = shortId;
         }
@@ -283,8 +283,6 @@ function trojanToSingbox(p) {
     return out;
 }
 function ssToSingbox(p) {
-    // اگر پلاگین چیزی غیر از v2ray-plugin باشه (مثل simple-obfs)، 
-    // چون سینگ‌باکس بدون فایل جانبی کرش می‌کنه، این کانفیگ رو برای سینگ‌باکس حذف می‌کنیم (null برمی‌گردونیم)
     if (p.plugin && p.plugin !== 'v2ray-plugin') {
         return null; 
     }
@@ -295,7 +293,6 @@ function ssToSingbox(p) {
         method: String(p.cipher), password: String(p.password),
     };
 
-    // فقط v2ray-plugin رو به استانداردِ سینگ‌باکس (WS/TLS) ترجمه می‌کنیم
     if (p.plugin === 'v2ray-plugin') {
         const opts = p['plugin-opts'] || {};
         if (opts.tls) {
@@ -401,8 +398,8 @@ function sshToSingbox(p) {
     if (p.password) out.password = String(p.password);
     return out;
 }
-// ── ۴. ساخت فایل کامل Sing-Box (بدون بن‌بست و ارور) ─────────
-// ── ۴. ساخت فایل کامل Sing-Box (حالت Global و بدون Rule Set) ─────────
+
+// ── ۴. ساخت فایل کامل Sing-Box ─────────
 function buildSingboxConfig(outboundsRaw) {
     const endpoints = [];
     const outbounds = [];
@@ -415,27 +412,122 @@ function buildSingboxConfig(outboundsRaw) {
     const allTags = outboundsRaw.map(o => o.tag);
 
     return {
-        log: { level: "warn" },
+        log: { level: "panic" },
         dns: {
             servers: [
-                { 
-                    tag: "remote_dns", 
-                    type: "https", 
-                    server: "https://8.8.8.8/dns-query", 
-                    detour: "Mr_Fix" 
+                {
+                    type: "https",
+                    tag: "resolver_dns",
+                    server: "8.8.8.8"
                 },
-                { 
-                    tag: "local_dns", 
-                    type: "udp", 
-                    server: "178.22.122.100" 
+                {
+                    type: "local",
+                    tag: "local_dns",
+                    domain_resolver: "resolver_dns"
+                },
+                {
+                    type: "https",
+                    tag: "remote_dns",
+                    detour: "Mr_Fix",
+                    domain_resolver: "hosts_dns",
+                    server: "8.8.4.4"
+                },
+                {
+                    type: "hosts",
+                    tag: "hosts_dns",
+                    predefined: {
+                        "localhost": [ "127.0.0.1", "::1" ],
+                        "localhost.localdomain": "127.0.0.1",
+                        "local": "127.0.0.1",
+                        "broadcasthost": "255.255.255.255",
+                        "www.gstatic.com": [
+                            "142.250.102.120", "142.250.102.94", "142.250.113.94", "142.250.117.120",
+                            "142.250.117.94", "142.250.140.94", "142.250.179.99", "142.250.184.3",
+                            "142.250.187.131", "142.250.194.195", "142.250.201.67", "142.250.217.131",
+                            "142.250.217.227", "142.250.26.94", "142.250.65.67", "142.250.70.35",
+                            "142.250.75.227", "142.250.80.67", "142.251.142.99", "142.251.179.94",
+                            "142.251.210.35", "142.251.222.227", "142.251.40.131", "142.251.40.227",
+                            "142.251.41.131", "172.217.168.67", "172.217.170.163", "172.217.172.163",
+                            "172.217.23.195", "172.217.5.3", "172.253.118.94", "192.178.56.35",
+                            "209.85.202.94", "209.85.203.94", "64.233.164.94", "74.125.68.94",
+                            "2a00:1450:400e:808::2003", "2a00:1450:4009:c04::78", "2a00:1450:4009:c04::5e",
+                            "2a00:1450:4009:c0b::78", "2a00:1450:4009:c0b::5e", "2a00:1450:4025:402::78",
+                            "2a00:1450:4025:402::5e", "2607:f8b0:4006:815::2003", "2607:f8b0:4023:1011::5e"
+                        ],
+                        "github.com": [
+                            "140.82.121.3", "140.82.121.4", "185.8.175.145", "20.26.156.215",
+                            "50.7.5.83", "91.212.174.133"
+                        ],
+                        "github.githubassets.com": [
+                            "185.199.108.215", "185.199.109.215", "185.199.110.215", "185.199.111.215"
+                        ],
+                        "avatars.githubusercontent.com": [
+                            "185.199.108.133", "185.199.109.133", "185.199.110.133", "185.199.111.133"
+                        ],
+                        "raw.githubusercontent.com": [
+                            "185.199.108.133", "185.199.109.133", "185.199.110.133", "185.199.111.133",
+                            "2606:50c0:8000::154", "2606:50c0:8001::154", "2606:50c0:8002::154", "2606:50c0:8003::154"
+                        ],
+                        "release-assets.githubusercontent.com": [
+                            "185.199.108.133", "185.199.109.133", "185.199.110.133", "185.199.111.133"
+                        ],
+                        "security.cloudflare-dns.com": [
+                            "1.0.0.2", "1.1.1.2", "2606:4700:4700::1002", "2606:4700:4700::1112"
+                        ],
+                        "cloudflare-dns.com": [
+                            "104.16.248.249", "104.16.249.249", "2606:4700::6810:f8f9", "2606:4700::6810:f9f9"
+                        ],
+                        "dns.quad9.net": [
+                            "149.112.112.112", "9.9.9.9", "2620:fe::9", "2620:fe::fe"
+                        ],
+                        "dns9.quad9.net": [
+                            "149.112.112.9", "9.9.9.9", "2620:fe::9", "2620:fe::fe:9"
+                        ],
+                        "dns10.quad9.net": [
+                            "149.112.112.10", "9.9.9.10", "2620:fe::10", "2620:fe::fe:10"
+                        ],
+                        "dns11.quad9.net": [
+                            "149.112.112.11", "9.9.9.11", "2620:fe::11", "2620:fe::fe:11"
+                        ],
+                        "dns12.quad9.net": [
+                            "149.112.112.12", "9.9.9.12", "2620:fe::12", "2620:fe::fe:12"
+                        ],
+                        "dns.adguard-dns.com": [
+                            "94.140.14.14", "94.140.15.15", "2a10:50c0::ad1:ff", "2a10:50c0::ad2:ff"
+                        ],
+                        "dns.google": [
+                            "8.8.4.4", "8.8.8.8", "2001:4860:4860::8844", "2001:4860:4860::8888"
+                        ],
+                        "dns.opendns.com": [
+                            "208.67.220.220", "208.67.222.222", "2620:119:35::35", "2620:119:53::53"
+                        ],
+                        "dns.sse.cisco.com": [
+                            "208.67.220.220", "208.67.222.222", "2620:119:35::35", "2620:119:53::53"
+                        ],
+                        "dns.umbrella.com": [
+                            "208.67.220.220", "208.67.222.222", "2620:119:35::35", "2620:119:53::53"
+                        ],
+                        "doh.opendns.com": [
+                            "146.112.41.2", "2620:119:fc::2"
+                        ],
+                        "doh.sse.cisco.com": [
+                            "146.112.41.2", "2620:119:fc::2"
+                        ],
+                        "doh.umbrella.com": [
+                            "146.112.41.5", "2620:119:fc::5"
+                        ]
+                    }
                 }
             ],
             rules: [
-                // فقط دامنه‌های ملی با پسوند ir رو به DNS داخلی می‌دیم
-                { domain_suffix: [".ir"], server: "local_dns" }
+                {
+                    ip_accept_any: true,
+                    server: "hosts_dns"
+                }
             ],
             final: "remote_dns",
-            strategy: "prefer_ipv4"
+            strategy: "prefer_ipv4",
+            independent_cache: true
         },
         endpoints: endpoints.length > 0 ? endpoints : undefined,
         inbounds: [
@@ -455,22 +547,38 @@ function buildSingboxConfig(outboundsRaw) {
         ],
         route: {
             rules: [
+                {
+                    domain: [
+                        "raw.githubusercontent.com",
+                        "security.cloudflare-dns.com",
+                        "www.gstatic.com"
+                    ],
+                    action: "resolve"
+                },
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
+                { inbound: "tun-in", action: "resolve" },
+                { inbound: "mixed-in", action: "resolve" },
                 { protocol: "dns", action: "hijack-dns" },
                 { port: 53, action: "hijack-dns" },
-                { ip_cidr: ["10.10.34.0/24"], action: "reject" },
-                
-                // دایرکت کردن سایت‌های پسوند ir و آی‌پی‌های داخلی مودم
-                { domain_suffix: [".ir"], outbound: "direct" },
+                {
+                    ip_cidr: [
+                        "10.10.34.0/24",
+                        "2001:4188:2:600:10:10:34:34/127",
+                        "2001:4188:2:600:10:10:34:36/128"
+                    ],
+                    action: "reject"
+                },
                 { ip_is_private: true, outbound: "direct" }
             ],
-            // مابقی ترافیک مستقیم وارد پروکسی میشه
-            final: "Mr_Fix", auto_detect_interface: true
+            final: "Mr_Fix",
+            auto_detect_interface: true,
+            default_domain_resolver: "resolver_dns"
         },
         experimental: { cache_file: { enabled: true } }
     };
 }
+
 // ── ۵. main ───────────────────────────────────────────────
 function main() {
     const inputFile = 'all.yaml';
