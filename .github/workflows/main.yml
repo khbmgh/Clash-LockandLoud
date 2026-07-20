@@ -29,7 +29,16 @@ jobs:
 
       - name: Run Converter (V2Ray + Sing-Box)
         run: node convert.js  
+     
+      - name: Download sing-box core for testing
+        run: |
+          wget https://github.com/SagerNet/sing-box/releases/download/v1.9.3/sing-box-1.9.3-linux-amd64.tar.gz
+          tar -xvf sing-box-1.9.3-linux-amd64.tar.gz
+          mv sing-box-1.9.3-linux-amd64/sing-box ./sing-box
+          chmod +x sing-box
 
+      - name: Run Aggressive Speed Tester
+        run: node tester.js
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
