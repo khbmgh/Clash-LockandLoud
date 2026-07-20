@@ -482,7 +482,7 @@ function buildSingboxConfig(outboundsRaw) {
         inbounds: [
             {
                 type: "tun", tag: "tun-in", interface_name: "tun0",
-                mtu: 9000, address: "172.19.0.1/30", auto_route: true,
+                mtu: 1500, address: "172.19.0.1/30", auto_route: true,
                 strict_route: true, stack: "system",
                 platform: { http_proxy: { enabled: true, server: "127.0.0.1", server_port: 7990 } }
             },
