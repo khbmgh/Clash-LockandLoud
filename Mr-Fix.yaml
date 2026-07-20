@@ -19,7 +19,7 @@ profile:
 # ================= DNS =================
 dns:
   enable: true
-  listen: :53
+  listen: 127.0.0.1:1053
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
@@ -64,8 +64,6 @@ dns:
     "+.ir":
       - https://dns.arvancloud.ir/dns-query
       - 178.22.122.100
-  direct-nameserver-follow-policy: false
-  prefer-h3: false
   respect-rules: true
   use-hosts: true
   use-system-hosts: true
@@ -338,3 +336,5 @@ hosts:
   "dns.umbrella.com": ["208.67.220.220", "208.67.222.222", "2620:119:35::35", "2620:119:53::53"]
   "doh.opendns.com": ["146.112.41.2", "2620:119:fc::2"]
   "doh.umbrella.com": ["146.112.41.5", "2620:119:fc::5"]
+
+#url:https://raw.githubusercontent.com/khbmgh/Clash-LockandLoud/main/Mr-Fix.yaml
