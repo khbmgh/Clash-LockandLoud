@@ -1,79 +1,78 @@
 const fs = require('fs');
 const { execSync, spawn } = require('child_process');
+const yaml = require('js-yaml');
 
-const TIMEOUT_SECONDS = 2; // حداکثر زمان مجاز برای دانلود
-const TEST_URL = "https://speed.cloudflare.com/__down?bytes=1000000"; // دانلود ۱ مگابایت از کلودفلر
+const TIMEOUT_SECONDS = 5; // مهربان‌تر کردن تست: ۵ ثانیه فرصت[cite: 5]
+const TEST_URL = "https://speed.cloudflare.com/__down?bytes=500000"; // حجم تست کم شد (۵۰۰ کیلوبایت)[cite: 5]
 
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function testSingleProxy(proxyOutbound) {
-    // ساخت یک کانفیگ موقت سینگ‌باکس فقط برای تست یک سرور
+async function testSingleClashProxy(proxyObj) {
     const tempConfig = {
-        log: { level: "fatal" },
-        inbounds: [{ type: "mixed", tag: "test-in", listen: "127.0.0.1", listen_port: 10800 }],
-        outbounds: [proxyOutbound]
+        port: 7890,
+        "socks-port": 7891,
+        "allow-lan": false,
+        mode: "global",
+        "log-level": "silent",
+        proxies: [proxyObj],
+        "proxy-groups": [
+            {
+                name: "GLOBAL",
+                type: "select",
+                proxies: [proxyObj.name]
+            }
+        ]
     };
-    
-    fs.writeFileSync('temp.json', JSON.stringify(tempConfig));
 
-    // اجرای سینگ‌باکس در بک‌گراند
-    const sbProcess = spawn('./sing-box', ['run', '-c', 'temp.json']);
-    await sleep(1000); // یک ثانیه صبر برای استارت شدن پورت
+    fs.writeFileSync('temp.yaml', yaml.dump(tempConfig));
+
+    // اجرای هسته کلش (Mihomo/Meta) در بک‌گراند
+    const clashProcess = spawn('./mihomo', ['-f', 'temp.yaml']);
+    await sleep(1500); // زمان برای استارت شدن
 
     let isAlive = false;
     try {
-        // تست دانلود ۱ مگابایت از طریق پورت ساکس ۵ کانفیگ موقت با تایم‌اوت ۲ ثانیه
-        console.log(`⏳ Testing: ${proxyOutbound.tag}...`);
-        execSync(`curl -x socks5h://127.0.0.1:10800 -m ${TIMEOUT_SECONDS} -o /dev/null -s -w "%{http_code}" ${TEST_URL}`, { stdio: 'ignore' });
+        console.log(`⏳ Testing Clash Node: ${proxyObj.name}...`);
+        execSync(`curl -x socks5h://127.0.0.1:7891 -m ${TIMEOUT_SECONDS} -o /dev/null -s -w "%{http_code}" ${TEST_URL}`, { stdio: 'ignore' });
         isAlive = true;
-        console.log(`✅ Passed: ${proxyOutbound.tag}`);
+        console.log(`✅ Passed: ${proxyObj.name}`);
     } catch (e) {
-        console.log(`❌ Failed or Too Slow: ${proxyOutbound.tag}`);
+        console.log(`❌ Failed or Too Slow: ${proxyObj.name}`);
     }
 
-    // بستن سینگ‌باکس موقت
-    sbProcess.kill('SIGINT');
-    await sleep(500);
+    clashProcess.kill('SIGINT');
+    await sleep(800); // تاخیر عمدی برای جلوگیری از بلاک شدن توسط سیستم امنیتی گیت‌هاب
     
     return isAlive;
 }
 
 async function main() {
-    console.log("🛠️ Starting Aggressive 1MB Speed Test...");
-    if (!fs.existsSync('singbox.json')) {
-        console.error("singbox.json not found!");
+    console.log("🛠️ Starting Clash Node Speed Tester...");
+    if (!fs.existsSync('all.yaml')) {
+        console.error("all.yaml not found!");
         process.exit(1);
     }
 
-    const config = JSON.parse(fs.readFileSync('singbox.json', 'utf8'));
-    const allOutbounds = config.outbounds;
-    
-    // جدا کردن پروکسی‌های اصلی از دایرکت و سلکتور
-    const standardTags = ["Mr_Fix", "Mr_Fix-2", "direct"];
-    const proxiesToTest = allOutbounds.filter(o => !standardTags.includes(o.tag));
+    const doc = yaml.load(fs.readFileSync('all.yaml', 'utf8'));
+    const proxiesToTest = doc.proxies || [];
     const goodProxies = [];
 
-    // تست تک‌تک پروکسی‌ها
+    console.log(`Total Proxies to check: ${proxiesToTest.length}`);
+
+    // تست تک‌تک پروکسی‌های کلش (به صورت سریالی برای دور زدن محدودیت اکشنز گیت‌هاب)
     for (const p of proxiesToTest) {
-        const passed = await testSingleProxy(p);
+        const passed = await testSingleClashProxy(p);
         if (passed) goodProxies.push(p);
     }
 
     console.log(`\n🎯 Survival Rate: ${goodProxies.length} out of ${proxiesToTest.length}`);
 
-    // بازسازی کانفیگ فقط با سرورهای زنده و سریع
-    const goodTags = goodProxies.map(o => o.tag);
-    config.outbounds = [
-        { type: "selector", tag: "Mr_Fix", outbounds: ["Mr_Fix-2", ...goodTags] },
-        { type: "urltest", tag: "Mr_Fix-2", outbounds: goodTags, url: "https://www.gstatic.com/generate_204", interval: "6m0s" },
-        { type: "direct", tag: "direct" },
-        ...goodProxies
-    ];
-
-    fs.writeFileSync('singbox.json', JSON.stringify(config, null, 2));
-    console.log("🚀 Final optimized config saved!");
+    // بازنویسی فایل all.yaml با سرورهای قدرتمند
+    const finalYaml = yaml.dump({ proxies: goodProxies });
+    fs.writeFileSync('all.yaml', finalYaml);
+    console.log("🚀 Final optimized Clash config saved!");
 }
 
 main();
