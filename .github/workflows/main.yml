@@ -27,23 +27,25 @@ jobs:
       - name: Run Main Scraper & Ping Check
         run: node index.js
 
+      - name: Download Mihomo (Clash Meta) core for testing
+        run: |
+          wget https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
+          gunzip mihomo-linux-amd64-v1.18.3.gz
+          mv mihomo-linux-amd64-v1.18.3 ./mihomo
+          chmod +x mihomo
+
+      - name: Run Aggressive Speed Tester (Clash)
+        run: node tester.js
+
+      # تبدیل رو بعد از تست کردن فایل all.yaml انجام میدیم تا فقط سرورهای تمیز وارد سینگ‌باکس بشن
       - name: Run Converter (V2Ray + Sing-Box)
         run: node convert.js  
-     
-      - name: Download sing-box core for testing
-        run: |
-          wget https://github.com/SagerNet/sing-box/releases/download/v1.9.3/sing-box-1.9.3-linux-amd64.tar.gz
-          tar -xvf sing-box-1.9.3-linux-amd64.tar.gz
-          mv sing-box-1.9.3-linux-amd64/sing-box ./sing-box
-          chmod +x sing-box
-
-      - name: Run Aggressive Speed Tester
-        run: node tester.js
+      
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto Update: Scrape, Ping & Convert Proxies $(date)" || exit 0
+          git commit -m "Auto Update: Scrape, Ping, Test & Convert Proxies $(date)" || exit 0
           git pull --rebase origin main
           git push
