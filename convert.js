@@ -3,14 +3,48 @@ const yaml = require('js-yaml');
 
 // =====================================================
 // convert.js — تبدیل all.yaml به فرمت‌های V2Ray و Sing-Box
-// ورودی: all.yaml (خروجی aggregator)
-// خروجی:
-//   v2ray_links.txt     — لینک‌های URI (vless:// vmess:// ...)
-//   v2ray_base64.txt    — همان لینک‌ها به صورت base64
-//   singbox.json        — فایل کامل sing-box
+// همراه با سیستم تزریق خودکار آی‌پی‌های تمیز کلودفلر
 // =====================================================
 
-// ── ۱. خواندن و parse دقیق YAML proxies با js-yaml ──────────
+// ── واکشی لیست آی‌پی‌های تمیز کلودفلر ────────────────────
+async function fetchCleanIPs() {
+    try {
+        console.log("🌐 Fetching clean Cloudflare IPs...");
+        const res = await fetch('https://raw.githubusercontent.com/ircfspace/endpoint/main/ipv4.json');
+        if (res.ok) {
+            const data = await res.json();
+            if (data.ipv4 && data.ipv4.length > 0) {
+                console.log(`✅ Successfully fetched ${data.ipv4.length} clean IPs.`);
+                return data.ipv4;
+            }
+        }
+    } catch (e) {
+        console.log("⚠️ Failed to fetch clean IPs, falling back to defaults.", e.message);
+    }
+    return ["104.17.3.81", "104.19.45.195", "172.67.118.45"];
+}
+
+// ── تزریق آی‌پی تمیز به کانفیگ‌های WS ─────────────────────
+function injectCleanIP(p, cleanIPs) {
+    if (p.network === 'ws' && cleanIPs.length > 0) {
+        const originalDomain = p.server;
+        
+        if (!p.sni) p.sni = originalDomain;
+        if (!p.servername) p.servername = originalDomain;
+
+        if (p['ws-opts']) {
+            if (!p['ws-opts'].headers) p['ws-opts'].headers = {};
+            if (!p['ws-opts'].headers.Host) p['ws-opts'].headers.Host = originalDomain;
+        }
+
+        const randomIP = cleanIPs[Math.floor(Math.random() * cleanIPs.length)];
+        p.server = randomIP;
+        p.name = `${p.name} | 🛡️ Clean IP`;
+    }
+    return p;
+}
+
+// ── ۱. خواندن و parse دقیق YAML proxies ──────────────────
 function parseProxiesYaml(text) {
     try {
         const doc = yaml.load(text);
@@ -107,7 +141,6 @@ function trojanToUri(p) {
 function ssToUri(p) {
     const auth = Buffer.from(`${p.cipher}:${p.password}`).toString('base64');
     let uri = `ss://${auth}@${p.server}:${p.port}`;
-    
     if (p.plugin) {
         const opts = [];
         opts.push(p.plugin);
@@ -118,7 +151,6 @@ function ssToUri(p) {
         }
         uri += `?plugin=${encodeURIComponent(opts.join(';'))}`;
     }
-    
     uri += `#${enc(p.name)}`;
     return uri;
 }
@@ -194,32 +226,27 @@ function proxyToSingbox(p) {
 
 function buildTlsObj(p) {
     const tls = { enabled: true };
-    
     if (p.servername || p.sni) tls.server_name = String(p.servername || p.sni);
     if (p['skip-cert-verify']) tls.insecure = true;
     if (p.alpn) tls.alpn = [].concat(p.alpn).map(String);
-    
     if (p['client-fingerprint']) {
         tls.utls = { enabled: true, fingerprint: String(p['client-fingerprint']) };
     } else if (p['reality-opts']) {
         tls.utls = { enabled: true, fingerprint: "chrome" };
     }
-
     if (p['reality-opts']) {
         const shortId = p['reality-opts']['short-id'] ? String(p['reality-opts']['short-id']) : '';
-        
         tls.reality = {
             enabled: true,
             public_key: String(p['reality-opts']['public-key'] || '')
         };
-
         if (shortId.length > 0 && shortId.length % 2 === 0) {
             tls.reality.short_id = shortId;
         }
     }
-    
     return tls;
 }
+
 function buildTransport(p) {
     if (!p.network || p.network === 'tcp') return null;
     if (p.network === 'ws') {
@@ -282,10 +309,9 @@ function trojanToSingbox(p) {
     if (transport) out.transport = transport;
     return out;
 }
+
 function ssToSingbox(p) {
-    if (p.plugin && p.plugin !== 'v2ray-plugin') {
-        return null; 
-    }
+    if (p.plugin && p.plugin !== 'v2ray-plugin') return null; 
 
     const out = {
         tag: String(p.name), type: 'shadowsocks',
@@ -306,9 +332,9 @@ function ssToSingbox(p) {
             if (opts.host) out.transport.headers = { Host: String(opts.host) };
         }
     }
-    
     return out;
 }
+
 function hy2ToSingbox(p) {
     const out = {
         tag: String(p.name), type: 'hysteria2',
@@ -348,20 +374,10 @@ function wgToSingbox(p) {
     if (p.ipv6) address.push(`${p.ipv6}/128`);
     
     const out = {
-        tag: String(p.name), 
-        type: 'wireguard',
-        system: false,
-        address,
+        tag: String(p.name), type: 'wireguard', system: false, address,
         private_key: String(p['private-key']),
-        peers: [
-            {
-                server: String(p.server),
-                server_port: parseInt(p.port, 10),
-                public_key: String(p['public-key']),
-            }
-        ]
+        peers: [{ server: String(p.server), server_port: parseInt(p.port, 10), public_key: String(p['public-key']) }]
     };
-    
     if (p['allowed-ips']) out.peers[0].allowed_ips = [].concat(p['allowed-ips']);
     if (p.reserved) out.peers[0].reserved = [].concat(p.reserved).map(Number);
     if (p.mtu) out.mtu = parseInt(p.mtu, 10);
@@ -414,34 +430,16 @@ function buildSingboxConfig(outboundsRaw) {
         log: { level: "panic" },
         dns: {
             servers: [
+                { type: "https", tag: "resolver_dns", server: "8.8.8.8" },
+                { type: "local", tag: "local_dns", domain_resolver: "resolver_dns" },
+                { type: "https", tag: "remote_dns", detour: "Mr_Fix", domain_resolver: "hosts_dns", server: "8.8.4.4" },
                 {
-                    type: "https",
-                    tag: "resolver_dns",
-                    server: "8.8.8.8"
-                },
-                {
-                    type: "local",
-                    tag: "local_dns",
-                    domain_resolver: "resolver_dns"
-                },
-                {
-                    type: "https",
-                    tag: "remote_dns",
-                    detour: "Mr_Fix",
-                    domain_resolver: "hosts_dns",
-                    server: "8.8.4.4"
-                },
-                {
-                    type: "hosts",
-                    tag: "hosts_dns",
+                    type: "hosts", tag: "hosts_dns",
                     predefined: {
-                        // ── ضروری برای سیستم‌عامل ──
                         "localhost": [ "127.0.0.1", "::1" ],
                         "localhost.localdomain": "127.0.0.1",
                         "local": "127.0.0.1",
                         "broadcasthost": "255.255.255.255",
-                        // ── ضروری: در route.rules صراحتاً action:resolve دارند ──
-                        // و urltest (Mr_Fix-2) برای health-check از gstatic استفاده می‌کند
                         "www.gstatic.com": [
                             "142.250.102.120", "142.250.102.94", "142.250.113.94", "142.250.117.120",
                             "142.250.117.94", "142.250.140.94", "142.250.179.99", "142.250.184.3",
@@ -466,12 +464,7 @@ function buildSingboxConfig(outboundsRaw) {
                     }
                 }
             ],
-            rules: [
-                {
-                    ip_accept_any: true,
-                    server: "hosts_dns"
-                }
-            ],
+            rules: [{ ip_accept_any: true, server: "hosts_dns" }],
             final: "remote_dns",
             strategy: "prefer_ipv4",
             independent_cache: true
@@ -495,14 +488,11 @@ function buildSingboxConfig(outboundsRaw) {
         route: {
             rules: [
                 {
-                    domain: [
-                        "raw.githubusercontent.com",
-                        "security.cloudflare-dns.com",
-                        "www.gstatic.com"
-                    ],
+                    domain: [ "raw.githubusercontent.com", "security.cloudflare-dns.com", "www.gstatic.com" ],
                     action: "resolve"
                 },
-                { network: "udp", port: [443], action: "reject" },
+                // فقط خود پروتکل QUIC رو مسدود کردیم تا اپلیکیشن گوگل روی بقیه پورت‌های UDP به مشکل نخوره
+                { protocol: "quic", action: "reject" },
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
                 { inbound: "tun-in", action: "resolve" },
@@ -527,8 +517,8 @@ function buildSingboxConfig(outboundsRaw) {
     };
 }
 
-// ── ۵. main ───────────────────────────────────────────────
-function main() {
+// ── ۵. اجرای اصلی با async/await ────────────────────────
+async function main() {
     const inputFile = 'all.yaml';
 
     if (!fs.existsSync(inputFile)) {
@@ -538,16 +528,20 @@ function main() {
 
     console.log(`📖 Reading ${inputFile}...`);
     const raw = fs.readFileSync(inputFile, 'utf-8');
-    const proxies = parseProxiesYaml(raw);
+    let proxies = parseProxiesYaml(raw);
     console.log(`✅ Parsed ${proxies.length} proxies`);
 
-    // ── ۱. خروجی کامل V2Ray (فقط Base64)
+    // گرفتن لیست آی‌پی‌های تمیز
+    const cleanIPs = await fetchCleanIPs();
+
+    // تزریق آی‌پی تمیز به کانفیگ‌ها قبل از تبدیل
+    proxies = proxies.map(p => injectCleanIP(p, cleanIPs));
+
     const uris = proxies.map(p => proxyToUri(p)).filter(Boolean);
     const base64 = Buffer.from(uris.join('\n')).toString('base64');
     fs.writeFileSync('v2ray_sub.txt', base64, 'utf-8');
-    console.log(`📂 Created: v2ray_sub.txt — ${uris.length} URI links (Base64 Encoded)`);
+    console.log(`📂 Created: v2ray_sub.txt — ${uris.length} URI links`);
 
-    // ── ۲. خروجی کامل Sing-Box (JSON ساختاریافته)
     const outbounds = proxies.map(p => proxyToSingbox(p)).filter(Boolean);
     const singboxConfig = buildSingboxConfig(outbounds);
     fs.writeFileSync('singbox.json', JSON.stringify(singboxConfig, null, 2), 'utf-8');
