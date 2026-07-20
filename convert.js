@@ -255,6 +255,7 @@ function vlessToSingbox(p) {
     if (p.tls) out.tls = buildTlsObj(p);
     const transport = buildTransport(p);
     if (transport) out.transport = transport;
+    out.packet_encoding = "xudp";   // ← اضافه شد
     return out;
 }
 
@@ -268,6 +269,7 @@ function vmessToSingbox(p) {
     if (p.tls) out.tls = buildTlsObj(p);
     const transport = buildTransport(p);
     if (transport) out.transport = transport;
+    out.packet_encoding = "xudp";   // ← اضافه شد
     return out;
 }
 
