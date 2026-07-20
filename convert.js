@@ -504,6 +504,7 @@ function buildSingboxConfig(outboundsRaw) {
                     ],
                     action: "resolve"
                 },
+                { protocol: "quic", action: "reject" },
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
                 { inbound: "tun-in", action: "resolve" },
