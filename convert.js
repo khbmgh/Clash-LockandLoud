@@ -255,7 +255,6 @@ function vlessToSingbox(p) {
     if (p.tls) out.tls = buildTlsObj(p);
     const transport = buildTransport(p);
     if (transport) out.transport = transport;
-    out.packet_encoding = "xudp";   // ← اضافه شد
     return out;
 }
 
@@ -269,7 +268,6 @@ function vmessToSingbox(p) {
     if (p.tls) out.tls = buildTlsObj(p);
     const transport = buildTransport(p);
     if (transport) out.transport = transport;
-    out.packet_encoding = "xudp";   // ← اضافه شد
     return out;
 }
 
@@ -483,7 +481,7 @@ function buildSingboxConfig(outboundsRaw) {
             {
                 type: "tun", tag: "tun-in", interface_name: "tun0",
                 mtu: 1500, address: "172.19.0.1/30", auto_route: true,
-                strict_route: true, stack: "system",
+                strict_route: true, stack: "mixed",
                 platform: { http_proxy: { enabled: true, server: "127.0.0.1", server_port: 7990 } }
             },
             { type: "mixed", tag: "mixed-in", listen: "127.0.0.1", listen_port: 7991 }
