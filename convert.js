@@ -474,14 +474,13 @@ function buildSingboxConfig(outboundsRaw) {
             {
                 type: "tun", tag: "tun-in", interface_name: "tun0",
                 mtu: 1500, address: "172.19.0.1/30", auto_route: true,
-                strict_route: true, stack: "mixed",
-                platform: { http_proxy: { enabled: true, server: "127.0.0.1", server_port: 7991 } }
+                strict_route: true, stack: "mixed"
             },
             { type: "mixed", tag: "mixed-in", listen: "127.0.0.1", listen_port: 7991 }
         ],
         outbounds: [
             { type: "selector", tag: "Mr_Fix", outbounds: ["Mr_Fix-2", ...allTags] },
-            { type: "urltest", tag: "Mr_Fix-2", outbounds: allTags, url: "https://www.gstatic.com/generate_204", interval: "6m0s" },
+            { type: "urltest", tag: "Mr_Fix-2", outbounds: allTags, url: "https://www.gstatic.com/generate_204", interval: "3m0s", tolerance: 50, idle_timeout: "10m0s" },
             { type: "direct", tag: "direct" },
             ...outbounds
         ],
@@ -492,7 +491,6 @@ function buildSingboxConfig(outboundsRaw) {
                     action: "resolve"
                 },
                 // فقط خود پروتکل QUIC رو مسدود کردیم تا اپلیکیشن گوگل روی بقیه پورت‌های UDP به مشکل نخوره
-                { protocol: "quic", action: "reject" },
                 { inbound: "tun-in", action: "sniff" },
                 { inbound: "mixed-in", action: "sniff" },
                 { inbound: "tun-in", action: "resolve" },
