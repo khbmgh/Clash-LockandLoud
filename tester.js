@@ -2,8 +2,8 @@ const fs = require('fs');
 const { execSync, spawn } = require('child_process');
 const yaml = require('js-yaml');
 
-const TIMEOUT_SECONDS = 5; // مهربان‌تر کردن تست: ۵ ثانیه فرصت[cite: 5]
-const TEST_URL = "https://speed.cloudflare.com/__down?bytes=500000"; // حجم تست کم شد (۵۰۰ کیلوبایت)[cite: 5]
+const TIMEOUT_SECONDS = 3; // مهربان‌تر کردن تست: ۵ ثانیه فرصت[cite: 5]
+const TEST_URL = "https://speed.cloudflare.com/__down?bytes=100000"; // حجم تست کم شد (۵۰۰ کیلوبایت)[cite: 5]
 
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
