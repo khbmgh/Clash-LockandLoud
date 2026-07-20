@@ -2,8 +2,9 @@ const fs = require('fs');
 const { execSync, spawn } = require('child_process');
 const yaml = require('js-yaml');
 
-const TIMEOUT_SECONDS = 3; // مهربان‌تر کردن تست: ۵ ثانیه فرصت[cite: 5]
-const TEST_URL = "https://speed.cloudflare.com/__down?bytes=100000"; // حجم تست کم شد (۵۰۰ کیلوبایت)[cite: 5]
+const TIMEOUT_SECONDS = 5; // فرصت کافی برای دانلود حجم بزرگ‌تر
+const TEST_URL = "https://speed.cloudflare.com/__down?bytes=500000"; // ۸ مگابایت به‌جای ۱۰۰ کیلوبایت
+const MIN_SPEED_BYTES_PER_SEC = 300000; // حداقل ۳۰۰ کیلوبایت بر ثانیه، وگرنه رد می‌شه
 
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -32,16 +33,25 @@ async function testSingleClashProxy(proxyObj) {
     const clashProcess = spawn('./mihomo', ['-f', 'temp.yaml']);
     await sleep(1500); // زمان برای استارت شدن
 
-    let isAlive = false;
+let isAlive = false;
     try {
         console.log(`⏳ Testing Clash Node: ${proxyObj.name}...`);
-        execSync(`curl -x socks5h://127.0.0.1:7891 -m ${TIMEOUT_SECONDS} -o /dev/null -s -w "%{http_code}" ${TEST_URL}`, { stdio: 'ignore' });
-        isAlive = true;
-        console.log(`✅ Passed: ${proxyObj.name}`);
-    } catch (e) {
-        console.log(`❌ Failed or Too Slow: ${proxyObj.name}`);
-    }
+        const result = execSync(
+            `curl -x socks5h://127.0.0.1:7891 -m ${TIMEOUT_SECONDS} -o /dev/null -s -w "%{speed_download}"  ${TEST_URL}`,
+            { stdio: ['ignore', 'pipe', 'ignore'] }
+        ).toString().trim();
 
+        const speedBytesPerSec = parseFloat(result) || 0;
+
+        if (speedBytesPerSec >= MIN_SPEED_BYTES_PER_SEC) {
+            isAlive = true;
+            console.log(`✅ Passed: ${proxyObj.name} — ${(speedBytesPerSec / 1024).toFixed(0)} KB/s`);
+        } else {
+            console.log(`❌ Too Slow: ${proxyObj.name} — ${(speedBytesPerSec / 1024).toFixed(0)} KB/s`);
+        }
+    } catch (e) {
+        console.log(`❌ Failed or Timeout: ${proxyObj.name}`);
+    }
     clashProcess.kill('SIGINT');
     await sleep(800); // تاخیر عمدی برای جلوگیری از بلاک شدن توسط سیستم امنیتی گیت‌هاب
     
