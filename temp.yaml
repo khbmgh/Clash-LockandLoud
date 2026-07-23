@@ -4,7 +4,7 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1049
+  - name: mieru 1 - 1071
     type: mieru
     server: 157.254.223.44
     port: 34567
@@ -16,4 +16,4 @@ proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1049
+      - mieru 1 - 1071
