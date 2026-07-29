@@ -3,6 +3,7 @@ allow-lan: true
 mode: rule
 log-level: silent
 ipv6: false
+find-process-mode: strict
 tcp-concurrent: true
 unified-delay: true
 global-client-fingerprint: chrome
@@ -15,6 +16,16 @@ profile:
     auto-interval:
       proxy-provider: 43200
       url-test: 1800
+
+# ================= Geo Data =================
+geo-auto-update: true
+geo-update-interval: 90
+geodata-mode: false
+geox-url:
+  geoip: https://github.com/Chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat
+  geosite: https://github.com/Chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat
+  mmdb: https://github.com/Chocolate4u/Iran-clash-rules/releases/latest/download/geoip.metadb
+  asn: https://github.com/Chocolate4U/Iran-v2ray-rules/raw/geolite2/GeoLite2-ASN.mmdb
 
 # ================= DNS =================
 dns:
@@ -75,15 +86,22 @@ tun:
   dns-hijack: ["any:53"]
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  device: Mihomo
 
 sniffer:
   enable: true
   parse-pure-ip: true
   override-destination: true
   sniff:
-    TLS: {ports: [443, 8443]}
-    QUIC: {ports: [443, 8443]}
-    HTTP: {ports: [80, 8080-8880]}
+    HTTP:
+      ports: [80, 8080-8880, 1-442, 444-8442, 8444-65535]
+    TLS:
+      ports: [443, 8443, 1-79, 81-8079, 8881-65535]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - www.gstatic.com
 
 # ================= Proxy Providers =================
 proxy-providers:
@@ -92,7 +110,7 @@ proxy-providers:
     url: "https://raw.githubusercontent.com/khbmgh/Clash-LockandLoud/main/all.yaml"
     interval: 43200
     path: ./proxy-providers/all_workers.yaml
-    health-check: {enable: true, interval: 1800, url: https://cp.cloudflare.com/generate_204}
+    health-check: {enable: true, interval: 1800, url: https://www.gstatic.com/generate_204}
     override: {udp: true, skip-cert-verify: true}
 
 # ================= Proxy Groups =================
@@ -121,7 +139,7 @@ proxy-groups:
 
   - name: 🔍 All-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -133,7 +151,7 @@ proxy-groups:
 
   - name: 🧩 Sudoku-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -142,7 +160,7 @@ proxy-groups:
 
   - name: 👁️ Mieru-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -151,7 +169,7 @@ proxy-groups:
 
   - name: 💨 ShadowQUIC-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -160,7 +178,7 @@ proxy-groups:
 
   - name: 🟣 VLESS-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 50
     lazy: true
@@ -169,7 +187,7 @@ proxy-groups:
 
   - name: 🔵 VMESS-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -178,7 +196,7 @@ proxy-groups:
 
   - name: 🟠 Hysteria2-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -187,7 +205,7 @@ proxy-groups:
 
   - name: 🔴 Trojan-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -196,7 +214,7 @@ proxy-groups:
 
   - name: 🟡 Shadowsocks-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -205,7 +223,7 @@ proxy-groups:
 
   - name: ⚪ WireGuard-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -214,7 +232,7 @@ proxy-groups:
 
   - name: 🔷 TUIC-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -223,7 +241,7 @@ proxy-groups:
 
   - name: 🟤 AnyTLS-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -232,7 +250,7 @@ proxy-groups:
 
   - name: ⬛ HTTP-SOCKS-SSH-Speed-Test
     type: url-test
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     tolerance: 100
     lazy: true
@@ -242,21 +260,21 @@ proxy-groups:
   - name: ⚖️ Worker-Load-Balance
     type: load-balance
     strategy: consistent-hashing
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     lazy: true
     use: [Mr_afxoni_All]
 
   - name: 🔄 Worker-Fallback-Mode
     type: fallback
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     lazy: true
     use: [Mr_afxoni_All]
 
   - name: 🔄 Fallback-All
     type: fallback
-    url: https://cp.cloudflare.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 1800
     lazy: true
     use: [Mr_afxoni_All]
@@ -292,10 +310,8 @@ rule-providers:
     url: https://raw.githubusercontent.com/liketolivefree/kobabi/main/oki.mrs
     path: ./rule-providers/other_rules.mrs
 
-
 # ================= Rules =================
 rules:
-
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
   - DOMAIN-SUFFIX,localhost,DIRECT
@@ -336,5 +352,3 @@ hosts:
   "dns.umbrella.com": ["208.67.220.220", "208.67.222.222", "2620:119:35::35", "2620:119:53::53"]
   "doh.opendns.com": ["146.112.41.2", "2620:119:fc::2"]
   "doh.umbrella.com": ["146.112.41.5", "2620:119:fc::5"]
-
-#url:https://raw.githubusercontent.com/khbmgh/Clash-LockandLoud/main/Mr-Fix.yaml
