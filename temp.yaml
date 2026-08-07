@@ -4,16 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1035
-    type: mieru
-    server: 157.254.223.44
-    port: 34567
-    username: dongtaiwang.com
-    password: dongtaiwang.com
-    transport: TCP
-    multiplexing: MULTIPLEXING_LOW
+  - name: socks 2 - 1016
+    type: socks5
+    server: 45.192.198.137
+    port: 8888
+    udp: true
+    username: u1179940355
+    password: kZqh4Dk9rrkxfI4B
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1035
+      - socks 2 - 1016
