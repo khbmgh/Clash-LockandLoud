@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 243 - 1048
-    type: vmess
-    server: 104.19.42.49
-    port: 2086
-    udp: true
-    network: ws
-    ws-opts:
-      path: github.com/Alvin9999
-      headers:
-        Host: ip2.1457230.xyz
-    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
-    alterId: 0
-    cipher: auto
+  - name: mieru 1 - 1048
+    type: mieru
+    server: 157.254.223.44
+    port: 34567
+    username: dongtaiwang.com
+    password: dongtaiwang.com
+    transport: TCP
+    multiplexing: MULTIPLEXING_LOW
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 243 - 1048
+      - mieru 1 - 1048
