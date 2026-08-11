@@ -4,23 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 243 - 1031
+  - name: vmess 235 - 1025
     type: vmess
-    server: 104.26.13.72
-    port: 443
+    server: 104.20.25.146
+    port: 2052
     udp: true
-    tls: true
-    servername: cake.capellare.com
     network: ws
     ws-opts:
-      path: /linkvws
+      path: github.com/Alvin9999
       headers:
-        Host: cake.capellare.com
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+        Host: cdn1.freegradely.xyz
+    uuid: d6b6d982-d52f-465a-b988-85670b23f64a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 243 - 1031
+      - vmess 235 - 1025
