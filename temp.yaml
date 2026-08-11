@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 235 - 1025
-    type: vmess
-    server: 104.20.25.146
-    port: 2052
-    udp: true
-    network: ws
-    ws-opts:
-      path: github.com/Alvin9999
-      headers:
-        Host: cdn1.freegradely.xyz
-    uuid: d6b6d982-d52f-465a-b988-85670b23f64a
-    alterId: 0
-    cipher: auto
+  - name: mieru 1 - 1049
+    type: mieru
+    server: 157.254.223.44
+    port: 34567
+    username: dongtaiwang.com
+    password: dongtaiwang.com
+    transport: TCP
+    multiplexing: MULTIPLEXING_LOW
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 235 - 1025
+      - mieru 1 - 1049
