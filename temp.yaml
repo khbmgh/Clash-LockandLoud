@@ -4,16 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1061
-    type: mieru
-    server: 157.254.223.44
-    port: 34567
-    username: dongtaiwang.com
-    password: dongtaiwang.com
-    transport: TCP
-    multiplexing: MULTIPLEXING_LOW
+  - name: vmess 242 - 1061
+    type: vmess
+    server: 172.67.204.84
+    port: 443
+    udp: true
+    tls: true
+    servername: jahfkjha.cfd
+    network: ws
+    ws-opts:
+      path: /linkws
+      headers:
+        Host: jahfkjha.cfd
+    uuid: 950db6aa-4926-4616-816e-ec0312dcb87b
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1061
+      - vmess 242 - 1061
