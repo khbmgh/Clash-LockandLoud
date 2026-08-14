@@ -4,16 +4,18 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1057
-    type: mieru
-    server: 157.254.223.44
-    port: 34567
-    username: dongtaiwang.com
-    password: dongtaiwang.com
-    transport: TCP
-    multiplexing: MULTIPLEXING_LOW
+  - name: vmess 239 - 1040
+    type: vmess
+    server: 85.90.217.42
+    port: 22324
+    udp: true
+    tls: false
+    skip-cert-verify: false
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1057
+      - vmess 239 - 1040
