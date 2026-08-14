@@ -4,22 +4,18 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 239 - 1053
+  - name: vmess 237 - 1036
     type: vmess
-    server: 173.245.49.143
-    port: 443
+    server: 67.220.72.237
+    port: 22324
     udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /233blog
-      headers:
-        Host: 173.245.49.143
-    uuid: aa586ced-9c6b-4882-aae5-f4fa3919c73c
+    tls: false
+    skip-cert-verify: false
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 239 - 1053
+      - vmess 237 - 1036
