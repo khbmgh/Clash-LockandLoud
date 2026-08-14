@@ -4,18 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 237 - 1036
+  - name: vmess 238 - 1035
     type: vmess
-    server: 67.220.72.237
-    port: 22324
+    server: 185.146.173.64
+    port: 443
     udp: true
-    tls: false
-    skip-cert-verify: false
-    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    tls: true
+    servername: nl1.vmess.site
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: nl1.vmess.site
+    uuid: 7723ee31-039b-48d0-bfd8-d591ca4baf4e
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 237 - 1036
+      - vmess 238 - 1035
