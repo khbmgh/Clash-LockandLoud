@@ -4,16 +4,28 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1054
-    type: mieru
-    server: 157.254.223.44
-    port: 34567
-    username: dongtaiwang.com
-    password: dongtaiwang.com
-    transport: TCP
-    multiplexing: MULTIPLEXING_LOW
+  - name: vmess 232 - 1070
+    type: vmess
+    server: 172.66.168.171
+    port: 443
+    udp: true
+    tls: true
+    servername: CAKE.cAPeLLaRe.Com
+    alpn:
+      - h3
+      - h2
+      - http/1.1
+    client-fingerprint: random
+    network: ws
+    ws-opts:
+      path: /linkvws
+      headers:
+        Host: CAKE.cAPeLLaRe.Com
+    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1054
+      - vmess 232 - 1070
