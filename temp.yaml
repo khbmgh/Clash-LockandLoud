@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 248 - 1048
+  - name: vmess 246 - 1045
     type: vmess
-    server: 172.67.72.154
-    port: 80
+    server: 67.220.72.237
+    port: 22324
     udp: true
-    network: ws
-    ws-opts:
-      path: /NkXnI0l6LGkotMyATWmx5f6MblN
-      headers:
-        Host: nl88.tradex2080.com
-    uuid: f533e37c-9da5-4955-a218-a7886e5719b6
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 248 - 1048
+      - vmess 246 - 1045
