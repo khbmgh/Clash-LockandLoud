@@ -4,28 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 232 - 1070
+  - name: vmess 250 - 1055
     type: vmess
-    server: 172.66.168.171
+    server: 173.245.49.143
     port: 443
     udp: true
     tls: true
-    servername: CAKE.cAPeLLaRe.Com
-    alpn:
-      - h3
-      - h2
-      - http/1.1
-    client-fingerprint: random
     network: ws
     ws-opts:
-      path: /linkvws
+      path: /233blog
       headers:
-        Host: CAKE.cAPeLLaRe.Com
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+        Host: 173.245.49.143
+    uuid: aa586ced-9c6b-4882-aae5-f4fa3919c73c
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 232 - 1070
+      - vmess 250 - 1055
