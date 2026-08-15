@@ -4,20 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 247 - 1056
+  - name: vmess 244 - 1044
     type: vmess
-    server: 172.66.213.38
+    server: 104.21.83.62
     port: 443
+    udp: true
     tls: true
-    skip-cert-verify: true
-    network: grpc
-    grpc-opts:
-      grpc-service-name: WgCmp8p80KDzo64uHE
-    uuid: dfbbc8de-8a4f-407d-8069-6de38d83c4e1
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: cdn.jsdelivr.net
+    uuid: 123456-7890-abcd-ef12-34567890abcd
     alterId: 0
-    cipher: chacha20-poly1305
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 247 - 1056
+      - vmess 244 - 1044
