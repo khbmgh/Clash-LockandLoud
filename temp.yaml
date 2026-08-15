@@ -4,23 +4,20 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 237 - 1044
+  - name: vmess 247 - 1056
     type: vmess
-    server: 188.114.97.1
+    server: 172.66.213.38
     port: 443
-    udp: true
     tls: true
-    servername: linde06.indiavideo.sbs
-    network: ws
-    ws-opts:
-      path: /linkws
-      headers:
-        Host: linde06.indiavideo.sbs
-    uuid: edbb1059-1633-4271-b66e-ed4fba47a1bf
+    skip-cert-verify: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: WgCmp8p80KDzo64uHE
+    uuid: dfbbc8de-8a4f-407d-8069-6de38d83c4e1
     alterId: 0
-    cipher: auto
+    cipher: chacha20-poly1305
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 237 - 1044
+      - vmess 247 - 1056
