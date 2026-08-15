@@ -4,22 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 239 - 1030
-    type: vmess
-    server: 203.30.191.192
-    port: 443
+  - name: socks 1 - 1056
+    type: socks5
+    server: 104.168.249.36
+    port: 1080
     udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /5QNROSRV
-      headers:
-        Host: oplg1.zhujicn2.com
-    uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
-    alterId: 0
-    cipher: auto
+    username: test123
+    password: test123
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 239 - 1030
+      - socks 1 - 1056
