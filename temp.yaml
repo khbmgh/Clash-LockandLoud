@@ -4,21 +4,24 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 238 - 1050
+  - name: vmess 247 - 1055
     type: vmess
-    server: 104.19.44.151
-    port: 8080
+    server: 104.17.77.77
+    port: 8443
     udp: true
+    tls: true
+    servername: v2ray1.dozapp.xyz
+    skip-cert-verify: false
     network: ws
     ws-opts:
-      path: /?ed=2048&Telegram🇨🇳 @WangCai_8
+      path: /lMnsZUN4/
       headers:
-        Host: amd2.720208.xyz
-    uuid: 3fdf9d48-578a-42dc-9fdd-0dfcefa3d0c5
+        host: v2ray1.dozapp.xyz
+    uuid: 60441548-b68e-43b2-8191-e3b884be4b3c
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 238 - 1050
+      - vmess 247 - 1055
