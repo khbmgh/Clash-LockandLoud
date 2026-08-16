@@ -4,15 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1085
-    type: socks5
-    server: 8.210.31.250
-    port: 1080
+  - name: vmess 238 - 1050
+    type: vmess
+    server: 104.19.44.151
+    port: 8080
     udp: true
-    username: '8888'
-    password: '8888'
+    network: ws
+    ws-opts:
+      path: /?ed=2048&Telegram🇨🇳 @WangCai_8
+      headers:
+        Host: amd2.720208.xyz
+    uuid: 3fdf9d48-578a-42dc-9fdd-0dfcefa3d0c5
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1085
+      - vmess 238 - 1050
