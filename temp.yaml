@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 237 - 1081
-    type: vmess
-    server: 104.19.47.48
-    port: 8080
-    udp: true
-    network: ws
-    ws-opts:
-      path: /?ed=2048&Telegram🇨🇳 @WangCai2
-      headers:
-        Host: oiictw.yydsii.com
-    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
-    alterId: 0
-    cipher: auto
+  - name: mieru 1 - 804
+    type: mieru
+    server: 157.254.223.44
+    port: 34567
+    username: dongtaiwang.com
+    password: dongtaiwang.com
+    transport: TCP
+    multiplexing: MULTIPLEXING_LOW
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 237 - 1081
+      - mieru 1 - 804
