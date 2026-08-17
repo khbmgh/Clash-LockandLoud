@@ -4,16 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: mieru 1 - 1115
-    type: mieru
-    server: 157.254.223.44
-    port: 34567
-    username: dongtaiwang.com
-    password: dongtaiwang.com
-    transport: TCP
-    multiplexing: MULTIPLEXING_LOW
+  - name: vmess 229 - 1101
+    type: vmess
+    server: 104.19.45.11
+    port: 2086
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: ip13.freegradely.xyz
+    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - mieru 1 - 1115
+      - vmess 229 - 1101
