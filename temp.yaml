@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 231 - 1077
+  - name: vmess 237 - 1081
     type: vmess
-    server: 193.111.78.106
-    port: 58304
+    server: 104.19.47.48
+    port: 8080
     udp: true
     network: ws
     ws-opts:
-      path: /
+      path: /?ed=2048&Telegram🇨🇳 @WangCai2
       headers:
-        Host: 193.111.78.106
-    uuid: 26b6fd32-04e6-43ff-a065-bea36f748655
+        Host: oiictw.yydsii.com
+    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 231 - 1077
+      - vmess 237 - 1081
