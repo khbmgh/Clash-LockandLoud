@@ -4,21 +4,24 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 229 - 1101
+  - name: vmess 225 - 1087
     type: vmess
-    server: 104.19.45.11
-    port: 2086
+    server: 104.17.77.77
+    port: 8443
     udp: true
+    tls: true
+    servername: v2ray1.dozapp.xyz
+    skip-cert-verify: false
     network: ws
     ws-opts:
-      path: /
+      path: /lMnsZUN4/
       headers:
-        Host: ip13.freegradely.xyz
-    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
+        host: v2ray1.dozapp.xyz
+    uuid: 60441548-b68e-43b2-8191-e3b884be4b3c
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 229 - 1101
+      - vmess 225 - 1087
