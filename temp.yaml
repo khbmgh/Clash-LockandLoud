@@ -4,13 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1116
-    type: socks5
-    server: 5.57.32.204
-    port: 10808
+  - name: vmess 237 - 1131
+    type: vmess
+    server: 134.195.196.211
+    port: 18000
     udp: true
+    uuid: f8c8dc3d-0d37-46b0-8b34-a7232882fcfe
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1116
+      - vmess 237 - 1131
