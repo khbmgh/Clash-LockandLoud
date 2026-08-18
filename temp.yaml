@@ -4,16 +4,20 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 237 - 1131
-    type: vmess
-    server: 134.195.196.211
-    port: 18000
+  - name: tuic 1 - 1117
+    type: tuic
+    server: 107.172.243.149
+    port: 8443
     udp: true
-    uuid: f8c8dc3d-0d37-46b0-8b34-a7232882fcfe
-    alterId: 0
-    cipher: auto
+    uuid: fa0f1a88-70d9-45b2-a51d-c56cc252cd6d
+    password: giBv2JToqH
+    udp-relay-mode: native
+    congestion-controller: bbr
+    sni: services.digitaleast.mobi
+    alpn:
+      - h3
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 237 - 1131
+      - tuic 1 - 1117
