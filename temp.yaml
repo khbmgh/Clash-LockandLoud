@@ -4,13 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1118
-    type: socks5
-    server: 193.233.218.213
-    port: 1080
-    udp: true
+  - name: tuic 1 - 1099
+    type: tuic
+    server: 107.172.243.149
+    port: 8443
+    uuid: fa0f1a88-70d9-45b2-a51d-c56cc252cd6d
+    password: giBv2JToqH
+    disable-sni: false
+    reduce-rtt: false
+    request-timeout: 0
+    udp-relay-mode: native
+    congestion-controller: bbr
+    sni: services.digitaleast.mobi
+    alpn:
+      - h3
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1118
+      - tuic 1 - 1099
