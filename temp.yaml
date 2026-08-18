@@ -4,20 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: tuic 1 - 1094
-    type: tuic
-    server: 107.172.243.149
-    port: 8443
-    udp: true
-    uuid: fa0f1a88-70d9-45b2-a51d-c56cc252cd6d
-    password: giBv2JToqH
-    udp-relay-mode: native
-    congestion-controller: bbr
-    sni: services.digitaleast.mobi
-    alpn:
-      - h3
+  - name: mieru 1 - 1090
+    type: mieru
+    server: 157.254.223.44
+    port: 34567
+    username: dongtaiwang.com
+    password: dongtaiwang.com
+    transport: TCP
+    multiplexing: MULTIPLEXING_LOW
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - tuic 1 - 1094
+      - mieru 1 - 1090
