@@ -4,13 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 3 - 1109
+  - name: socks 4 - 1118
     type: socks5
-    server: 47.243.173.50
-    port: 11211
+    server: 85.17.179.81
+    port: 1080
     udp: true
+    username: M_YOU_D
+    password: Private
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 3 - 1109
+      - socks 4 - 1118
