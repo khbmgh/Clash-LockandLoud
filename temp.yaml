@@ -4,13 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 998
+  - name: socks 2 - 1017
     type: socks5
-    server: 47.243.173.50
-    port: 11211
+    server: 45.144.54.40
+    port: 1080
     udp: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 998
+      - socks 2 - 1017
