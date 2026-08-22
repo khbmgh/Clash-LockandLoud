@@ -4,7 +4,7 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1023
+  - name: socks 2 - 1021
     type: socks5
     server: 45.144.54.40
     port: 1080
@@ -13,4 +13,4 @@ proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1023
+      - socks 2 - 1021
