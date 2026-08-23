@@ -4,13 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 3 - 1046
+  - name: socks 3 - 1036
     type: socks5
-    server: 45.76.164.255
-    port: 1085
+    server: 185.235.197.46
+    port: 8443
     udp: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 3 - 1046
+      - socks 3 - 1036
