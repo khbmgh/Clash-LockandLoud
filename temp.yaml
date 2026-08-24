@@ -4,21 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 256 - 1004
-    type: vmess
-    server: 172.67.211.43
-    port: 2095
+  - name: socks 1 - 997
+    type: socks5
+    server: 45.144.54.40
+    port: 1080
     udp: true
-    network: ws
-    ws-opts:
-      path: /hgcefomn
-      headers:
-        Host: 172.67.211.43
-    uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-    alterId: 0
-    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 256 - 1004
+      - socks 1 - 997
