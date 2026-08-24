@@ -4,13 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 3 - 1020
+  - name: socks 4 - 1012
     type: socks5
-    server: 5.202.53.190
+    server: 45.144.54.40
     port: 1080
     udp: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 3 - 1020
+      - socks 4 - 1012
