@@ -4,13 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1018
-    type: socks5
-    server: 45.144.54.40
-    port: 1080
+  - name: vmess 259 - 1003
+    type: vmess
+    server: 203.23.104.190
+    port: 443
     udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: /11201
+      headers:
+        Host: 203.23.104.190
+    uuid: 1af4ba3d-e60f-4f83-b38b-23fc181f676d
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1018
+      - vmess 259 - 1003
