@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1036
-    type: socks5
-    server: 45.144.54.40
-    port: 1080
+  - name: vmess 262 - 1017
+    type: vmess
+    server: 104.19.47.214
+    port: 8080
     udp: true
+    network: ws
+    ws-opts:
+      path: /?ed=2048&Telegram🇨🇳 @WangCai2
+      headers:
+        Host: oiictw.yydsii.com
+    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1036
+      - vmess 262 - 1017
