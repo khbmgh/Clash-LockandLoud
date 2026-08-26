@@ -4,16 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 262 - 1001
-    type: vmess
-    server: 104.18.32.47
-    port: 8080
+  - name: socks 1 - 1022
+    type: socks5
+    server: 45.144.54.40
+    port: 1080
     udp: true
-    uuid: cd5625be-b0dc-4b9a-9a04-785c75171436
-    alterId: 0
-    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 262 - 1001
+      - socks 1 - 1022
