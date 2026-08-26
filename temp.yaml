@@ -4,7 +4,7 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 4 - 1017
+  - name: socks 4 - 1016
     type: socks5
     server: 47.242.19.215
     port: 8899
@@ -15,4 +15,4 @@ proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 4 - 1017
+      - socks 4 - 1016
