@@ -4,21 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 242 - 1154
-    type: vmess
-    server: 104.18.57.111
-    port: 2052
+  - name: socks 1 - 1161
+    type: socks5
+    server: 45.144.54.40
+    port: 1080
     udp: true
-    network: ws
-    ws-opts:
-      path: github.com/Alvin9999
-      headers:
-        Host: cdn1.freegradely.xyz
-    uuid: d6b6d982-d52f-465a-b988-85670b23f64a
-    alterId: 0
-    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 242 - 1154
+      - socks 1 - 1161
