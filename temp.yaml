@@ -4,13 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1155
-    type: socks5
-    server: 5.255.117.250
-    port: 1080
+  - name: vmess 259 - 1149
+    type: vmess
+    server: 216.106.185.141
+    port: 22324
     udp: true
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1155
+      - vmess 259 - 1149
