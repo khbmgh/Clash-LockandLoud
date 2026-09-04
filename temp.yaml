@@ -4,13 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1126
+  - name: socks 1 - 1136
     type: socks5
-    server: 5.255.113.177
-    port: 1080
+    server: 45.192.242.201
+    port: 8888
     udp: true
+    username: hanbaocloud
+    password: hanbaocloud
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1126
+      - socks 1 - 1136
