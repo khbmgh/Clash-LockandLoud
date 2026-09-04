@@ -4,22 +4,18 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 264 - 1169
+  - name: vmess 266 - 1163
     type: vmess
-    server: 142.132.163.200
-    port: 80
+    server: 85.90.217.42
+    port: 22324
+    udp: true
     tls: false
-    skip-cert-verify: true
-    network: ws
-    ws-opts:
-      path: /graphql
-      headers:
-        Host: 142.132.163.200
-    uuid: 7f965e3e-b03f-455e-a96e-01b61f72537a
+    skip-cert-verify: false
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 264 - 1169
+      - vmess 266 - 1163
