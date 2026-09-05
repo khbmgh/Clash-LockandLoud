@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1150
+  - name: vmess 277 - 1177
     type: vmess
-    server: 23.162.200.227
-    port: 443
+    server: 104.24.169.183
+    port: 8080
     udp: true
-    tls: true
     network: ws
     ws-opts:
-      path: /
+      path: /NASNET/cdn#/?BIA_TELEGRAM@AZARBAYJAB1_AZARBAYJAB1_AZARBAYJAB1_AZARBAYJAB1?ed=2560
       headers:
-        Host: vk.com
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+        Host: nasnet-571299667.rahavard365.co
+    uuid: nasnet
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1150
+      - vmess 277 - 1177
