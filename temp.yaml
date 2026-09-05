@@ -4,21 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 265 - 1151
+  - name: vmess 257 - 1175
     type: vmess
-    server: 104.19.21.63
-    port: 2052
+    server: 188.114.99.0
+    port: 443
     udp: true
+    tls: true
     network: ws
     ws-opts:
-      path: github.com/Alvin9999
+      path: linkvws
       headers:
-        Host: cdn1.freegradely.xyz
-    uuid: d6b6d982-d52f-465a-b988-85670b23f64a
-    alterId: 0
+        Host: ophelia.mom
+    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+    alterId: 1
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 265 - 1151
+      - vmess 257 - 1175
