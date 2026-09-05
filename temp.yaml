@@ -4,18 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 266 - 1163
+  - name: vmess 265 - 1151
     type: vmess
-    server: 85.90.217.42
-    port: 22324
+    server: 104.19.21.63
+    port: 2052
     udp: true
-    tls: false
-    skip-cert-verify: false
-    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    network: ws
+    ws-opts:
+      path: github.com/Alvin9999
+      headers:
+        Host: cdn1.freegradely.xyz
+    uuid: d6b6d982-d52f-465a-b988-85670b23f64a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 266 - 1163
+      - vmess 265 - 1151
