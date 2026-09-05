@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 277 - 1177
+  - name: vmess 257 - 1145
     type: vmess
-    server: 104.24.169.183
+    server: 104.19.47.188
     port: 8080
     udp: true
     network: ws
     ws-opts:
-      path: /NASNET/cdn#/?BIA_TELEGRAM@AZARBAYJAB1_AZARBAYJAB1_AZARBAYJAB1_AZARBAYJAB1?ed=2560
+      path: /?ed=2048&Telegram🇨🇳 @WangCai2
       headers:
-        Host: nasnet-571299667.rahavard365.co
-    uuid: nasnet
+        Host: oiictw.yydsii.com
+    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 277 - 1177
+      - vmess 257 - 1145
