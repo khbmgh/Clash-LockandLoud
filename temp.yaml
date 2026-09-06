@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 275 - 1172
+  - name: vmess 285 - 1188
     type: vmess
-    server: 104.19.44.151
+    server: 172.66.44.97
     port: 8080
     udp: true
-    network: ws
-    ws-opts:
-      path: /?ed=2048&Telegram🇨🇳 @WangCai_8
-      headers:
-        Host: amd2.720208.xyz
-    uuid: 3fdf9d48-578a-42dc-9fdd-0dfcefa3d0c5
+    uuid: bd079453-339d-4c1f-8859-92e3e7029abd
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 275 - 1172
+      - vmess 285 - 1188
