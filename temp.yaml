@@ -4,22 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 270 - 1241
-    type: vmess
-    server: 104.19.169.8
-    port: 443
+  - name: socks 1 - 1275
+    type: socks5
+    server: 45.144.54.40
+    port: 1080
     udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /ray
-      headers:
-        Host: m2.v2rayfree1.xyz
-    uuid: e83172e2-a031-4bc6-8f22-efe02dba8752
-    alterId: 0
-    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 270 - 1241
+      - socks 1 - 1275
