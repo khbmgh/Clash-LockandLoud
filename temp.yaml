@@ -4,13 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1166
-    type: socks5
-    server: 45.144.54.40
-    port: 1080
+  - name: vmess 271 - 1212
+    type: vmess
+    server: 47.86.107.119
+    port: 443
     udp: true
+    tls: true
+    servername: lcv8v9l7OyamxxfZ.v.3dns.vip
+    network: ws
+    ws-opts:
+      path: /ws-vmess
+      headers:
+        Host: lcv8v9l7OyamxxfZ.v.3dns.vip
+    uuid: f23bb427c1f94373876c2f43e9f790f3
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1166
+      - vmess 271 - 1212
