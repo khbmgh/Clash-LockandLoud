@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 239 - 1145
+  - name: vmess 258 - 1160
     type: vmess
-    server: 172.64.233.37
-    port: 2086
+    server: 5.75.192.206
+    port: 15307
     udp: true
-    network: ws
-    ws-opts:
-      path: /
-      headers:
-        Host: ip2.1457230.xyz
-    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
+    uuid: 1c3b61a1-cfd5-41e3-99b7-061203decf66
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 239 - 1145
+      - vmess 258 - 1160
