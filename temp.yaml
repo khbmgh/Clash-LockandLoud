@@ -4,24 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 271 - 1235
+  - name: vmess 239 - 1145
     type: vmess
-    server: 172.64.32.154
-    port: 2087
+    server: 172.64.233.37
+    port: 2086
     udp: true
-    tls: true
-    servername: dd21146ygfdSNA9191281280kdm22kas2123Aawdsd1234bb664283163.firstamoviruscloud.net
-    alpn:
-      - h2
-      - http/1.1
-    network: grpc
-    grpc-opts:
-      grpc-service-name: ''
-    uuid: 2a3263e2-891c-4446-b474-a8c63acb6e25
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: ip2.1457230.xyz
+    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 271 - 1235
+      - vmess 239 - 1145
