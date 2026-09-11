@@ -4,16 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 258 - 1160
+  - name: vmess 258 - 1159
     type: vmess
-    server: 5.75.192.206
-    port: 15307
+    server: 47.76.44.32
+    port: 443
     udp: true
-    uuid: 1c3b61a1-cfd5-41e3-99b7-061203decf66
+    tls: true
+    network: ws
+    ws-opts:
+      path: /ws-vmess
+      headers:
+        Host: 93ucrn4i0PffUAbk.v.3dns.vip
+    uuid: f23bb427c1f94373876c2f43e9f790f3
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 258 - 1160
+      - vmess 258 - 1159
