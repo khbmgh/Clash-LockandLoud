@@ -4,23 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 287 - 1162
-    type: vmess
-    server: 38.107.234.57
-    port: 80
+  - name: socks 1 - 1169
+    type: socks5
+    server: 47.76.175.249
+    port: 1080
     udp: true
-    tls: false
-    skip-cert-verify: false
-    network: ws
-    ws-opts:
-      path: /vmess/
-      headers:
-        host: wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc
-    uuid: 567f4be5-12ab-42e1-b8d9-db6fd1fdd31c
-    alterId: 0
-    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 287 - 1162
+      - socks 1 - 1169
