@@ -4,13 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1169
-    type: socks5
-    server: 47.76.175.249
-    port: 1080
+  - name: vmess 277 - 1159
+    type: vmess
+    server: 104.16.60.8
+    port: 443
     udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: /us2ekjds3nay
+      headers:
+        Host: us2e-20240116.v2freevpn.com
+    uuid: 2a8a10fb-9ca3-367e-a234-cf09f841be4f
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1169
+      - vmess 277 - 1159
