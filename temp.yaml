@@ -4,23 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 254 - 1125
+  - name: vmess 271 - 1124
     type: vmess
-    server: 104.26.13.72
+    server: 104.21.15.212
     port: 443
-    udp: true
     tls: true
-    servername: cake.capellare.com
+    skip-cert-verify: true
     network: ws
     ws-opts:
-      path: /linkvws
+      path: /linkws
       headers:
-        Host: cake.capellare.com
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+        Host: glweidf.sbs
+    uuid: 76221bfb-e92f-4e80-81c5-6fe48f50ac0b
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 254 - 1125
+      - vmess 271 - 1124
