@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 271 - 1124
+  - name: vmess 255 - 1132
     type: vmess
-    server: 104.21.15.212
-    port: 443
-    tls: true
-    skip-cert-verify: true
+    server: 104.19.47.186
+    port: 8080
+    udp: true
     network: ws
     ws-opts:
-      path: /linkws
+      path: /?ed=2048&Telegram🇨🇳 @WangCai2
       headers:
-        Host: glweidf.sbs
-    uuid: 76221bfb-e92f-4e80-81c5-6fe48f50ac0b
+        Host: oiictw.yydsii.com
+    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 271 - 1124
+      - vmess 255 - 1132
