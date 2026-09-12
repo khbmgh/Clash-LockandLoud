@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 277 - 1159
+  - name: vmess 254 - 1125
     type: vmess
-    server: 104.16.60.8
+    server: 104.26.13.72
     port: 443
     udp: true
     tls: true
+    servername: cake.capellare.com
     network: ws
     ws-opts:
-      path: /us2ekjds3nay
+      path: /linkvws
       headers:
-        Host: us2e-20240116.v2freevpn.com
-    uuid: 2a8a10fb-9ca3-367e-a234-cf09f841be4f
+        Host: cake.capellare.com
+    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 277 - 1159
+      - vmess 254 - 1125
