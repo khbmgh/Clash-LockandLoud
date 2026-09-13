@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 256 - 1148
+  - name: vmess 241 - 1132
     type: vmess
-    server: 94.128.12.238
-    port: 443
+    server: 104.19.47.174
+    port: 8443
     udp: true
     tls: true
+    servername: hk01.linkitnow.net
     network: ws
     ws-opts:
       path: /
       headers:
-        Host: sazgar.serveirc.com
-    uuid: ecba5b33-f768-4d8a-b004-b29e8e5c676f
+        Host: hk01.linkitnow.net
+    uuid: 39135a39-e6ca-43df-a360-d859eea58d86
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 256 - 1148
+      - vmess 241 - 1132
