@@ -4,17 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1138
+  - name: vmess 256 - 1148
     type: vmess
-    server: 168.119.174.229
+    server: 94.128.12.238
     port: 443
-    tls: false
-    skip-cert-verify: true
-    uuid: 6b7cbc41-fb80-41a8-8eb6-b5bdb0e86147
+    udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: sazgar.serveirc.com
+    uuid: ecba5b33-f768-4d8a-b004-b29e8e5c676f
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1138
+      - vmess 256 - 1148
