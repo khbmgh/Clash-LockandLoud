@@ -4,15 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1152
-    type: socks5
-    server: 8.209.236.192
-    port: 1080
+  - name: vmess 266 - 1162
+    type: vmess
+    server: 159.89.29.136
+    port: 80
     udp: true
-    username: '123456'
-    password: '123456'
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: cx.com
+    uuid: d20d6ede-433c-11ed-b81f-cfd905df9958
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1152
+      - vmess 266 - 1162
