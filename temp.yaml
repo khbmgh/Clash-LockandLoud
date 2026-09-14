@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 266 - 1162
+  - name: vmess 262 - 1133
     type: vmess
-    server: 159.89.29.136
-    port: 80
+    server: 172.66.44.97
+    port: 8080
     udp: true
-    network: ws
-    ws-opts:
-      path: /vmess
-      headers:
-        Host: cx.com
-    uuid: d20d6ede-433c-11ed-b81f-cfd905df9958
+    uuid: bd079453-339d-4c1f-8859-92e3e7029abd
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 266 - 1162
+      - vmess 262 - 1133
