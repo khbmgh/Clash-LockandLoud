@@ -4,15 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 4 - 1201
+  - name: socks 5 - 1203
     type: socks5
-    server: 104.168.249.36
-    port: 1080
-    skip-cert-verify: true
-    username: test123
-    password: test123
+    server: 8.217.182.75
+    port: 3060
+    udp: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 4 - 1201
+      - socks 5 - 1203
