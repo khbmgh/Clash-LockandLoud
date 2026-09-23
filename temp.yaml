@@ -4,13 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 5 - 1203
+  - name: socks 4 - 1168
     type: socks5
-    server: 8.217.182.75
-    port: 3060
+    server: 103.210.161.8
+    port: 1080
     udp: true
+    username: T2c9PTpPZz09
+    password: T2c9PTpPZz09
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 5 - 1203
+      - socks 4 - 1168
