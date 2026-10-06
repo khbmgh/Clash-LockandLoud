@@ -4,13 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1192
-    type: socks5
-    server: 178.252.165.226
-    port: 1080
+  - name: vmess 258 - 1178
+    type: vmess
+    server: 104.19.47.15
+    port: 8443
     udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: hk01.linkitnow.net
+    uuid: 39135a39-e6ca-43df-a360-d859eea58d86
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1192
+      - vmess 258 - 1178
