@@ -4,16 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 262 - 1189
+  - name: vmess 257 - 1195
     type: vmess
-    server: 165.154.195.38
-    port: 35034
+    server: 104.19.45.243
+    port: 2095
     udp: true
-    uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: onea.flha.ru
+    uuid: 7a737f41-b792-4260-94ff-3d864da67b80
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 262 - 1189
+      - vmess 257 - 1195
