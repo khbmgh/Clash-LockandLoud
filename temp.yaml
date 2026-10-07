@@ -4,21 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 257 - 1195
+  - name: vmess 260 - 1219
     type: vmess
-    server: 104.19.45.243
-    port: 2095
+    server: 141.101.115.140
+    port: 443
     udp: true
+    tls: true
     network: ws
     ws-opts:
-      path: /
+      path: /dongtaiwang.com
       headers:
-        Host: onea.flha.ru
-    uuid: 7a737f41-b792-4260-94ff-3d864da67b80
+        Host: clash6.ssr-free.xyz
+    uuid: 5f64fa65-7b14-49c5-954d-aa15c6bfcacd
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 257 - 1195
+      - vmess 260 - 1219
