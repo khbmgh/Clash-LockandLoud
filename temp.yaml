@@ -4,16 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 263 - 1214
+  - name: vmess 262 - 1189
     type: vmess
-    server: 8.217.230.196
-    port: 9999
+    server: 165.154.195.38
+    port: 35034
     udp: true
-    uuid: 02dc4f5b-b87d-410d-b9d5-0c6f921d92f8
+    uuid: 959a8caf-4cea-43d0-a548-3628e7ddfafc
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 263 - 1214
+      - vmess 262 - 1189
