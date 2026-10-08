@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1214
+  - name: vmess 257 - 1212
     type: vmess
-    server: 172.67.178.127
-    port: 443
+    server: 140.238.55.84
+    port: 2083
     udp: true
     tls: true
+    servername: or.521166.xyz
     network: ws
     ws-opts:
-      path: /123
+      path: /or3
       headers:
-        Host: 172.67.178.127
-    uuid: 26b5fbcf-d199-407e-e8bf-96d7489d247d
+        Host: 140.238.55.84
+    uuid: ac251237-576f-40c8-a543-554960c958b1
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1214
+      - vmess 257 - 1212
