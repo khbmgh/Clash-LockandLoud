@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 260 - 1219
+  - name: vmess 245 - 1195
     type: vmess
-    server: 141.101.115.140
-    port: 443
+    server: 104.19.45.15
+    port: 2086
     udp: true
-    tls: true
     network: ws
     ws-opts:
-      path: /dongtaiwang.com
+      path: github.com/Alvin9999
       headers:
-        Host: clash6.ssr-free.xyz
-    uuid: 5f64fa65-7b14-49c5-954d-aa15c6bfcacd
+        Host: ip13.freegradely.xyz
+    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 260 - 1219
+      - vmess 245 - 1195
