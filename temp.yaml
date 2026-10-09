@@ -4,21 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 245 - 1151
-    type: vmess
-    server: 132.145.80.230
-    port: 80
-    udp: true
-    network: ws
-    ws-opts:
-      path: /cctv13.m3u8
-      headers:
-        Host: kr02.a0a.xyz
-    uuid: 5155860e-d07d-46c3-9128-3afbd84626c7
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1165
+    type: socks5
+    server: 31.77.19.92
+    port: 443
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 245 - 1151
+      - socks 1 - 1165
