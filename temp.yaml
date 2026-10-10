@@ -4,14 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1169
+  - name: socks 2 - 1165
     type: socks5
-    server: 8.209.236.192
+    server: 185.145.99.41
     port: 1080
-    username: '123456'
-    password: '123456'
+    skip-cert-verify: true
+    username: test123
+    password: test123
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1169
+      - socks 2 - 1165
