@@ -4,23 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 242 - 1109
-    type: vmess
-    server: 94.177.51.198
-    port: 443
-    udp: true
-    tls: true
-    servername: renderer-stream-2-62.mirra.now
-    network: ws
-    ws-opts:
-      path: /api/v1/gpu-stream/socket
-      headers:
-        Host: renderer-stream-2-62.mirra.now
-    uuid: db50a20e-7ff5-4e70-948f-17cc9ca7c154
-    alterId: 0
-    cipher: auto
+  - name: socks 3 - 1116
+    type: socks5
+    server: 36.155.23.163
+    port: 10808
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 242 - 1109
+      - socks 3 - 1116
