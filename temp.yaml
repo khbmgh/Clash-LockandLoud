@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 244 - 1149
+  - name: vmess 242 - 1109
     type: vmess
-    server: 104.21.31.183
+    server: 94.177.51.198
     port: 443
     udp: true
     tls: true
+    servername: renderer-stream-2-62.mirra.now
     network: ws
     ws-opts:
-      path: linkvws
+      path: /api/v1/gpu-stream/socket
       headers:
-        Host: octavi.cfd
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-    alterId: 1
+        Host: renderer-stream-2-62.mirra.now
+    uuid: db50a20e-7ff5-4e70-948f-17cc9ca7c154
+    alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 244 - 1149
+      - vmess 242 - 1109
