@@ -4,13 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1126
-    type: socks5
-    server: 31.77.19.92
+  - name: vmess 244 - 1149
+    type: vmess
+    server: 104.21.31.183
     port: 443
-    skip-cert-verify: true
+    udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: linkvws
+      headers:
+        Host: octavi.cfd
+    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+    alterId: 1
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1126
+      - vmess 244 - 1149
