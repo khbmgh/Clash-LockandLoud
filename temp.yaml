@@ -4,21 +4,24 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 247 - 1125
+  - name: vmess 250 - 1120
     type: vmess
-    server: 172.67.131.245
-    port: 80
+    server: 172.64.32.154
+    port: 2087
     udp: true
-    network: ws
-    ws-opts:
-      path: /dT9s3HqgZeD3eApzDAfhOHq
-      headers:
-        Host: 172.67.131.245
-    uuid: 0b65bb06-6b28-487a-8e3c-820dda51e977
+    tls: true
+    servername: dd21146ygfdSNA9191281280kdm22kas2123Aawdsd1234bb155138194158.lianlingames.net
+    alpn:
+      - h2
+      - http/1.1
+    network: grpc
+    grpc-opts:
+      grpc-service-name: ''
+    uuid: 2a3263e2-891c-4446-b474-a8c63acb6e25
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 247 - 1125
+      - vmess 250 - 1120
