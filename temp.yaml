@@ -4,24 +4,12 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 258 - 1137
-    type: vmess
-    server: 172.64.32.154
-    port: 2087
-    udp: true
-    tls: true
-    servername: dd21146ygfdSNA9191281280kdm22kas2123Aawdsd1234bb155138194158.lianlingames.net
-    alpn:
-      - h2
-      - http/1.1
-    network: grpc
-    grpc-opts:
-      grpc-service-name: ''
-    uuid: 2a3263e2-891c-4446-b474-a8c63acb6e25
-    alterId: 0
-    cipher: auto
+  - name: socks 2 - 1131
+    type: socks5
+    server: 38.79.114.43
+    port: 8885
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 258 - 1137
+      - socks 2 - 1131
