@@ -4,12 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1161
-    type: socks5
-    server: 5.255.117.250
-    port: 1080
+  - name: vmess 250 - 1153
+    type: vmess
+    server: 104.21.4.6
+    port: 443
+    tls: true
+    skip-cert-verify: true
+    network: ws
+    ws-opts:
+      path: /linkws
+      headers:
+        Host: glweidf.cfd
+    uuid: 1052f24e-7b09-45eb-b0c5-d858eb124192
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1161
+      - vmess 250 - 1153
