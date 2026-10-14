@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1180
-    type: socks5
-    server: 36.155.23.163
-    port: 10808
-    skip-cert-verify: true
+  - name: vmess 253 - 1178
+    type: vmess
+    server: 145.239.55.210
+    port: 80
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: google.whatsapp.snapp.torob.basalam.fortresshost.ir.
+    uuid: 067fcd63-b215-4abd-8529-ae929a9971a9
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1180
+      - vmess 253 - 1178
