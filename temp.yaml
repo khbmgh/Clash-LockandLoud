@@ -4,17 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 245 - 1153
+  - name: vmess 254 - 1182
     type: vmess
-    server: 217.142.138.61
-    port: 80
+    server: 3.79.184.50
+    port: 1003
     udp: true
-    network: http
-    uuid: ac1b933d-afff-4487-93ef-f57130a55dff
+    uuid: 86ddeb8d-288e-4399-b496-3e8f2ca45247
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 245 - 1153
+      - vmess 254 - 1182
