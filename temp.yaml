@@ -4,13 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1144
-    type: socks5
-    server: 45.74.31.41
-    port: 4176
-    skip-cert-verify: true
+  - name: vmess 247 - 1150
+    type: vmess
+    server: 104.19.32.0
+    port: 443
+    udp: true
+    tls: true
+    servername: xmivideo.cfd
+    network: ws
+    ws-opts:
+      path: /linkws
+      headers:
+        Host: xmivideo.cfd
+    uuid: 93ea486a-bada-42a4-ac38-d088b320fa1e
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1144
+      - vmess 247 - 1150
