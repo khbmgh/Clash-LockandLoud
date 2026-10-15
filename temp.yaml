@@ -4,22 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 250 - 1137
-    type: vmess
-    server: 172.67.178.127
-    port: 443
-    udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /123
-      headers:
-        Host: 172.67.178.127
-    uuid: 26b5fbcf-d199-407e-e8bf-96d7489d247d
-    alterId: 0
-    cipher: auto
+  - name: socks 2 - 1144
+    type: socks5
+    server: 45.74.31.41
+    port: 4176
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 250 - 1137
+      - socks 2 - 1144
