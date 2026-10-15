@@ -4,16 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 254 - 1182
+  - name: vmess 261 - 1201
     type: vmess
-    server: 3.79.184.50
-    port: 1003
+    server: 104.19.48.0
+    port: 8443
     udp: true
-    uuid: 86ddeb8d-288e-4399-b496-3e8f2ca45247
+    tls: true
+    servername: hk01.linkitnow.net
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: hk01.linkitnow.net
+    uuid: 39135a39-e6ca-43df-a360-d859eea58d86
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 254 - 1182
+      - vmess 261 - 1201
