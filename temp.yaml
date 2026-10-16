@@ -4,22 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 241 - 1154
+  - name: vmess 252 - 1194
     type: vmess
-    server: 23.227.38.23
-    port: 443
+    server: 167.104.219.97
+    port: 2086
     udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /AUIKN8AU
-      headers:
-        Host: oplg1.cfcdn2.xyz
-    uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
+    uuid: 077fd3d8-cfaf-5a9c-533b-a9de5603c254
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 241 - 1154
+      - vmess 252 - 1194
