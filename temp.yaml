@@ -4,23 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 248 - 1173
+  - name: vmess 241 - 1154
     type: vmess
-    server: 198.41.208.172
+    server: 23.227.38.23
     port: 443
     udp: true
     tls: true
-    servername: sg-gcore-2.sharecentre.online
     network: ws
     ws-opts:
-      path: /shirker
+      path: /AUIKN8AU
       headers:
-        Host: sg-gcore-2.sharecentre.online
-    uuid: 20e92881-5fb4-4b05-bc77-57929476dc69
+        Host: oplg1.cfcdn2.xyz
+    uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 248 - 1173
+      - vmess 241 - 1154
