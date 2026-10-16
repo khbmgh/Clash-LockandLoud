@@ -4,13 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1216
-    type: socks5
-    server: 20.121.252.238
-    port: 3000
-    skip-cert-verify: true
+  - name: vmess 248 - 1173
+    type: vmess
+    server: 198.41.208.172
+    port: 443
+    udp: true
+    tls: true
+    servername: sg-gcore-2.sharecentre.online
+    network: ws
+    ws-opts:
+      path: /shirker
+      headers:
+        Host: sg-gcore-2.sharecentre.online
+    uuid: 20e92881-5fb4-4b05-bc77-57929476dc69
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1216
+      - vmess 248 - 1173
