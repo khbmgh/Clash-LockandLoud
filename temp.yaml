@@ -4,21 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 250 - 1188
+  - name: vmess 246 - 1184
     type: vmess
-    server: 23.227.38.23
-    port: 8080
+    server: 104.17.137.127
+    port: 443
     udp: true
+    tls: true
+    servername: hk.niskakowski.ggff.net
     network: ws
     ws-opts:
-      path: 34c0bb5e-c120-432d-9c58-bd7d82c7397b-vm
+      path: /aa
       headers:
-        Host: uh-lawyers-instruments-kernel.trycloudflare.com
-    uuid: 34c0bb5e-c120-432d-9c58-bd7d82c7397b
+        Host: hk.niskakowski.ggff.net
+    uuid: 47eab0de-97f9-49be-f2f3-2e4eb17268e6
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 250 - 1188
+      - vmess 246 - 1184
