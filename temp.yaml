@@ -4,22 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 249 - 1184
+  - name: vmess 245 - 1185
     type: vmess
-    server: 141.101.115.33
+    server: 23.227.38.23
     port: 443
     udp: true
     tls: true
     network: ws
     ws-opts:
-      path: /guolicheng/hinet?ed=2048
+      path: /AUIKN8AU
       headers:
-        Host: hinet.meizhiyuanya.xyz
-    uuid: 5ceb716a-9a0c-493a-9a0b-a05e08a1b1fc
+        Host: oplg1.cfcdn2.xyz
+    uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 249 - 1184
+      - vmess 245 - 1185
