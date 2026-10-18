@@ -4,13 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1185
-    type: socks5
-    server: 113.22.224.63
-    port: 1083
-    skip-cert-verify: true
+  - name: vmess 244 - 1185
+    type: vmess
+    server: 172.64.154.200
+    port: 443
+    udp: true
+    tls: true
+    servername: lg4.zhujicn2.com
+    network: ws
+    ws-opts:
+      path: /dongtaiwang.com
+      headers:
+        Host: lg4.zhujicn2.com
+    uuid: a8030afd-812a-4afe-a766-9c76ff3eddd4
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1185
+      - vmess 244 - 1185
