@@ -4,22 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 245 - 1185
-    type: vmess
-    server: 23.227.38.23
-    port: 443
-    udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /AUIKN8AU
-      headers:
-        Host: oplg1.cfcdn2.xyz
-    uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1200
+    type: socks5
+    server: 89.58.42.118
+    port: 3129
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 245 - 1185
+      - socks 1 - 1200
