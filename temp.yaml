@@ -4,22 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1177
-    type: vmess
-    server: 141.101.115.140
-    port: 443
-    udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /dongtaiwang.com
-      headers:
-        Host: clash6.ssr-free.xyz
-    uuid: 5f64fa65-7b14-49c5-954d-aa15c6bfcacd
-    alterId: 0
-    cipher: auto
+  - name: socks 3 - 1148
+    type: socks5
+    server: 57.129.182.181
+    port: 1080
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1177
+      - socks 3 - 1148
