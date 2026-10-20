@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 249 - 1135
+  - name: vmess 255 - 1165
     type: vmess
-    server: 162.159.128.7
-    port: 443
+    server: 152.67.8.205
+    port: 80
     udp: true
-    tls: true
     network: ws
     ws-opts:
-      path: /5QNROSRV
+      path: /
       headers:
-        Host: 162.159.128.7
-    uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
+        Host: 152.67.8.205
+    uuid: 9db4c708-aef8-4359-821b-38e47990be0d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 249 - 1135
+      - vmess 255 - 1165
