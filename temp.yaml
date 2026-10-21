@@ -4,23 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 250 - 1195
+  - name: vmess 243 - 1214
     type: vmess
-    server: 8.217.13.103
+    server: 20.235.220.189
     port: 443
     udp: true
     tls: true
-    servername: qtkdr8jxe3wefxjm.v.3dns.vip
+    servername: 6JDvArazgU3qQR6Q.v.3dns.vip
     network: ws
     ws-opts:
-      path: /
+      path: /ws-vmess
       headers:
-        Host: qtkdr8jxe3wefxjm.v.3dns.vip
-    uuid: f23bb427-c1f9-4373-876c-2f43e9f790f3
+        Host: 6JDvArazgU3qQR6Q.v.3dns.vip
+    uuid: f23bb427c1f94373876c2f43e9f790f3
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 250 - 1195
+      - vmess 243 - 1214
