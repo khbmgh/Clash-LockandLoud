@@ -4,20 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 248 - 1203
+  - name: vmess 238 - 1190
     type: vmess
-    server: 172.66.213.38
+    server: 23.227.38.38
     port: 443
+    udp: true
     tls: true
-    skip-cert-verify: true
-    network: grpc
-    grpc-opts:
-      grpc-service-name: WgCmp8p80KDzo64uHE
-    uuid: dfbbc8de-8a4f-407d-8069-6de38d83c4e1
+    network: ws
+    ws-opts:
+      path: /ECTCJ0DF
+      headers:
+        Host: 23.227.38.38
+    uuid: 40d496a6-ceeb-4096-baeb-4cc52b205621
     alterId: 0
-    cipher: chacha20-poly1305
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 248 - 1203
+      - vmess 238 - 1190
