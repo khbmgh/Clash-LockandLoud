@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 243 - 1190
+  - name: vmess 261 - 1170
     type: vmess
-    server: 203.23.104.222
-    port: 443
+    server: 57.128.164.21
+    port: 80
     udp: true
-    tls: true
     network: ws
     ws-opts:
-      path: /wss51068
+      path: /d3d3LmlyYW5ob3N0LmNvbQ==?ed=2560
       headers:
-        Host: 203.23.104.222
-    uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
+        Host: https.http.www.net.com.ramseyv2.ir.
+    uuid: bda82bcd-f6e2-46ae-9552-673f0b87ac30
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 243 - 1190
+      - vmess 261 - 1170
