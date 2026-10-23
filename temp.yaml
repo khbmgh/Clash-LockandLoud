@@ -4,22 +4,24 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 239 - 1140
+  - name: vmess 231 - 1130
     type: vmess
-    server: 162.159.135.79
+    server: 104.17.136.198
     port: 443
+    udp: true
     tls: true
-    skip-cert-verify: true
+    servername: vmess.lbw666.dpdns.org
+    client-fingerprint: chrome
     network: ws
     ws-opts:
-      path: /linkvws
+      path: /ws?ed=2048
       headers:
-        Host: janett.click
-    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+        Host: vmess.lbw666.dpdns.org
+    uuid: 0cf6d970-3f1d-4aae-a989-92a8f76ae3db
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 239 - 1140
+      - vmess 231 - 1130
