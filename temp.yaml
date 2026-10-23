@@ -4,24 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 231 - 1130
-    type: vmess
-    server: 104.17.136.198
-    port: 443
-    udp: true
-    tls: true
-    servername: vmess.lbw666.dpdns.org
-    client-fingerprint: chrome
-    network: ws
-    ws-opts:
-      path: /ws?ed=2048
-      headers:
-        Host: vmess.lbw666.dpdns.org
-    uuid: 0cf6d970-3f1d-4aae-a989-92a8f76ae3db
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1163
+    type: socks5
+    server: 51.15.20.32
+    port: 1088
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 231 - 1130
+      - socks 1 - 1163
