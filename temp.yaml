@@ -4,21 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1170
-    type: vmess
-    server: 57.128.164.21
-    port: 80
-    udp: true
-    network: ws
-    ws-opts:
-      path: /d3d3LmlyYW5ob3N0LmNvbQ==?ed=2560
-      headers:
-        Host: https.http.www.net.com.ramseyv2.ir.
-    uuid: bda82bcd-f6e2-46ae-9552-673f0b87ac30
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1161
+    type: socks5
+    server: 104.168.249.36
+    port: 1080
+    username: test123
+    password: test123
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1170
+      - socks 1 - 1161
