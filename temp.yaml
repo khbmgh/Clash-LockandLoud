@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 236 - 1131
+  - name: vmess 242 - 1194
     type: vmess
-    server: 57.128.164.21
+    server: 104.248.80.136
     port: 80
     udp: true
     network: ws
     ws-opts:
-      path: /d3d3LmlyYW5ob3N0LmNvbQ==?ed=2560
+      path: /graphql
       headers:
-        Host: https.http.www.net.com.ramseyv2.ir.
-    uuid: bda82bcd-f6e2-46ae-9552-673f0b87ac30
+        Host: 104.248.80.136
+    uuid: df756db8-a7de-4ff9-a847-d2632bd021e2
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 236 - 1131
+      - vmess 242 - 1194
