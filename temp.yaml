@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 3 - 1157
-    type: socks5
-    server: 58.32.16.138
-    port: 7000
-    skip-cert-verify: true
+  - name: vmess 236 - 1131
+    type: vmess
+    server: 57.128.164.21
+    port: 80
+    udp: true
+    network: ws
+    ws-opts:
+      path: /d3d3LmlyYW5ob3N0LmNvbQ==?ed=2560
+      headers:
+        Host: https.http.www.net.com.ramseyv2.ir.
+    uuid: bda82bcd-f6e2-46ae-9552-673f0b87ac30
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 3 - 1157
+      - vmess 236 - 1131
