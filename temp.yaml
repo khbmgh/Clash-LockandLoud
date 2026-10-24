@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 242 - 1194
+  - name: vmess 241 - 1189
     type: vmess
-    server: 104.248.80.136
+    server: 104.20.36.139
     port: 80
     udp: true
     network: ws
     ws-opts:
-      path: /graphql
+      path: /vmess
       headers:
-        Host: 104.248.80.136
-    uuid: df756db8-a7de-4ff9-a847-d2632bd021e2
+        Host: 127.0.0.1.dl.эврика.mrarsha.尤里卡.醫生.специалист.wonkacapitano.buzz.
+    uuid: 2d14e84b-226b-412a-9a3c-ffce70b02bdf
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 242 - 1194
+      - vmess 241 - 1189
