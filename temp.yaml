@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 241 - 1189
+  - name: vmess 251 - 1190
     type: vmess
-    server: 104.20.36.139
-    port: 80
+    server: 38.91.107.49
+    port: 18000
     udp: true
-    network: ws
-    ws-opts:
-      path: /vmess
-      headers:
-        Host: 127.0.0.1.dl.эврика.mrarsha.尤里卡.醫生.специалист.wonkacapitano.buzz.
-    uuid: 2d14e84b-226b-412a-9a3c-ffce70b02bdf
+    uuid: f8c8dc3d-0d37-46b0-8b34-a7232882fcfe
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 241 - 1189
+      - vmess 251 - 1190
