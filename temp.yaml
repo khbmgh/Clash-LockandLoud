@@ -4,16 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 251 - 1190
-    type: vmess
-    server: 38.91.107.49
-    port: 18000
-    udp: true
-    uuid: f8c8dc3d-0d37-46b0-8b34-a7232882fcfe
-    alterId: 0
-    cipher: auto
+  - name: socks 4 - 1190
+    type: socks5
+    server: 172.245.108.219
+    port: 11080
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 251 - 1190
+      - socks 4 - 1190
