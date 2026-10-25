@@ -4,23 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 246 - 1157
+  - name: vmess 244 - 1183
     type: vmess
-    server: 47.88.79.34
-    port: 443
+    server: 172.111.146.64
+    port: 80
     udp: true
-    tls: true
-    servername: rib9jxayoqjgn2kw.v.3dns.vip
     network: ws
     ws-opts:
-      path: /ws-vmess
+      path: /
       headers:
-        Host: rib9jxayoqjgn2kw.v.3dns.vip
-    uuid: 9b31490d-190e-4ef1-af0a-7ccab3e7c3b5
+        Host: 172.111.146.64
+    uuid: 05b8c783-7f59-47f9-9923-06a465679f6a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 246 - 1157
+      - vmess 244 - 1183
