@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 253 - 1214
+  - name: vmess 238 - 1154
     type: vmess
-    server: 188.114.99.29
+    server: 104.16.56.52
     port: 2053
     udp: true
     tls: true
+    servername: mating-spell-consider-rental.trycloudflare.com
     network: ws
     ws-opts:
-      path: /?ed=2048
+      path: /vmess-argo?ed=2560
       headers:
-        Host: 188.114.99.29
-    uuid: 72f76c36-3e3c-45b3-a61f-d8f017345958
+        Host: mating-spell-consider-rental.trycloudflare.com
+    uuid: 8a599586-696e-4af7-a98c-693d5947fcad
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 253 - 1214
+      - vmess 238 - 1154
