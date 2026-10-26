@@ -4,23 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 228 - 1130
+  - name: vmess 240 - 1144
     type: vmess
-    server: 104.19.48.0
-    port: 8443
+    server: 203.30.188.190
+    port: 443
     udp: true
     tls: true
-    servername: hk01.linkitnow.net
     network: ws
     ws-opts:
-      path: /
+      path: /A2DJOPFT
       headers:
-        Host: hk01.linkitnow.net
-    uuid: 39135a39-e6ca-43df-a360-d859eea58d86
+        Host: 203.30.188.190
+    uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 228 - 1130
+      - vmess 240 - 1144
