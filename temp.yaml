@@ -4,22 +4,12 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 240 - 1144
-    type: vmess
-    server: 203.30.188.190
-    port: 443
-    udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /A2DJOPFT
-      headers:
-        Host: 203.30.188.190
-    uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1175
+    type: socks5
+    server: 47.238.126.208
+    port: 1080
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 240 - 1144
+      - socks 1 - 1175
