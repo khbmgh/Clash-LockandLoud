@@ -4,21 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 244 - 1183
-    type: vmess
-    server: 172.111.146.64
-    port: 80
-    udp: true
-    network: ws
-    ws-opts:
-      path: /
-      headers:
-        Host: 172.111.146.64
-    uuid: 05b8c783-7f59-47f9-9923-06a465679f6a
-    alterId: 0
-    cipher: auto
+  - name: socks 2 - 1167
+    type: socks5
+    server: 69.55.49.177
+    port: 38182
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 244 - 1183
+      - socks 2 - 1167
