@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1193
-    type: socks5
-    server: 77.221.148.116
-    port: 10808
+  - name: vmess 230 - 1182
+    type: vmess
+    server: 104.19.45.80
+    port: 2095
     udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: onea.flha.ru
+    uuid: 7a737f41-b792-4260-94ff-3d864da67b80
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1193
+      - vmess 230 - 1182
