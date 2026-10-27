@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 230 - 1182
+  - name: vmess 244 - 1221
     type: vmess
-    server: 104.19.45.80
-    port: 2095
+    server: 104.21.234.74
+    port: 80
     udp: true
     network: ws
     ws-opts:
-      path: /
+      path: /?ed=2048&Telegram🇨🇳
       headers:
-        Host: onea.flha.ru
-    uuid: 7a737f41-b792-4260-94ff-3d864da67b80
+        Host: a.prapt1.ir
+    uuid: 7022982f-da4c-48c9-c660-b2315abdcf7e
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 230 - 1182
+      - vmess 244 - 1221
