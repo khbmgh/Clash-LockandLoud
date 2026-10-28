@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1215
-    type: socks5
-    server: 193.25.215.182
-    port: 22222
+  - name: vmess 237 - 1219
+    type: vmess
+    server: 104.19.47.77
+    port: 2086
     udp: true
+    network: ws
+    ws-opts:
+      path: github.com/Alvin9999
+      headers:
+        Host: ip1.1457230.xyz
+    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1215
+      - vmess 237 - 1219
