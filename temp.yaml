@@ -4,14 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1238
-    type: socks5
-    server: 69.55.49.177
-    port: 38182
-    udp: true
-    skip-cert-verify: true
+  - name: vmess 241 - 1221
+    type: vmess
+    server: 8.209.117.4
+    port: 443
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: goodfamily19.site
+    uuid: 572126f8-5301-83c2-0a26-c30ced3db7c4
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1238
+      - vmess 241 - 1221
