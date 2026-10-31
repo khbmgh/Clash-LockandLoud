@@ -4,23 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 249 - 1299
+  - name: vmess 250 - 1280
     type: vmess
-    server: 172.67.198.187
-    port: 443
+    server: 198.41.193.181
+    port: 80
     udp: true
-    tls: true
-    servername: xmivideo.cfd
     network: ws
     ws-opts:
-      path: /linkws
+      path: /vmess
       headers:
-        Host: xmivideo.cfd
-    uuid: 93ea486a-bada-42a4-ac38-d088b320fa1e
+        Host: 127.0.0.1.mrarsha.kомната0.房間騎自行車的人.bелосипедисты.bikeriders.wonkacapitano.buzz.
+    uuid: 92791642-1471-4b93-980a-81030985f3ce
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 249 - 1299
+      - vmess 250 - 1280
