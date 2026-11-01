@@ -4,12 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1280
-    type: socks5
-    server: 34.150.120.78
-    port: 1080
+  - name: vmess 227 - 1278
+    type: vmess
+    server: 104.19.45.80
+    port: 2095
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: onea.flha.ru
+    uuid: 7a737f41-b792-4260-94ff-3d864da67b80
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1280
+      - vmess 227 - 1278
