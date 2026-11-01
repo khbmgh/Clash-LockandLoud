@@ -4,21 +4,12 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 250 - 1280
-    type: vmess
-    server: 198.41.193.181
-    port: 80
-    udp: true
-    network: ws
-    ws-opts:
-      path: /vmess
-      headers:
-        Host: 127.0.0.1.mrarsha.kомната0.房間騎自行車的人.bелосипедисты.bikeriders.wonkacapitano.buzz.
-    uuid: 92791642-1471-4b93-980a-81030985f3ce
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1280
+    type: socks5
+    server: 34.150.120.78
+    port: 1080
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 250 - 1280
+      - socks 1 - 1280
