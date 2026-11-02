@@ -4,13 +4,26 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1315
-    type: socks5
-    server: 176.124.206.150
-    port: 8443
-    skip-cert-verify: true
+  - name: vmess 248 - 1310
+    type: vmess
+    server: 173.245.59.8
+    port: 443
+    udp: true
+    tls: true
+    servername: 77h2quiet-dream-5c34.foratay741.workers.dev
+    alpn:
+      - http/1.1
+    client-fingerprint: chrome
+    network: ws
+    ws-opts:
+      path: /glweidf.cfd/linkws
+      headers:
+        Host: 77h2quiet-dream-5c34.foratay741.workers.dev
+    uuid: 1052f24e-7b09-45eb-b0c5-d858eb124192
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1315
+      - vmess 248 - 1310
