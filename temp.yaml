@@ -4,9 +4,9 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 239 - 1317
+  - name: vmess 247 - 1300
     type: vmess
-    server: 104.19.36.160
+    server: 8.218.195.61
     port: 443
     udp: true
     tls: true
@@ -14,12 +14,12 @@ proxies:
     ws-opts:
       path: /
       headers:
-        Host: restless-haze-599b.zjjcool.workers.dev
-    uuid: ad806487-2d26-4636-98b6-ab85cc8521f7
-    alterId: 64
+        Host: EX1oGt73NzPQKAc2.v.3dns.vip
+    uuid: f23bb427-c1f9-4373-876c-2f43e9f790f3
+    alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 239 - 1317
+      - vmess 247 - 1300
