@@ -4,23 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 251 - 1296
+  - name: vmess 239 - 1317
     type: vmess
-    server: 47.244.120.197
-    port: 36703
+    server: 104.19.36.160
+    port: 443
     udp: true
-    tls: false
-    skip-cert-verify: false
+    tls: true
     network: ws
     ws-opts:
-      path: /arki?ed=2048
+      path: /
       headers:
-        host: ''
-    uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
-    alterId: 0
+        Host: restless-haze-599b.zjjcool.workers.dev
+    uuid: ad806487-2d26-4636-98b6-ab85cc8521f7
+    alterId: 64
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 251 - 1296
+      - vmess 239 - 1317
