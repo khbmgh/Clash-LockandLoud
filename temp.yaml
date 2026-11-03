@@ -4,22 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 248 - 1296
+  - name: vmess 251 - 1296
     type: vmess
-    server: 172.64.152.150
-    port: 443
+    server: 47.244.120.197
+    port: 36703
     udp: true
-    tls: true
+    tls: false
+    skip-cert-verify: false
     network: ws
     ws-opts:
-      path: /dongtaiwang.com
+      path: /arki?ed=2048
       headers:
-        Host: clash6.ssr-free.xyz
-    uuid: 5f64fa65-7b14-49c5-954d-aa15c6bfcacd
+        host: ''
+    uuid: 45b83519-9c4f-4052-a11b-02e017b636d4
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 248 - 1296
+      - vmess 251 - 1296
