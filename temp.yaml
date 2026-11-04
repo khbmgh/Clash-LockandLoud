@@ -4,23 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 252 - 1257
+  - name: vmess 251 - 1259
     type: vmess
-    server: 37.220.161.247
-    port: 443
+    server: 43.173.67.42
+    port: 47116
     udp: true
-    tls: true
-    servername: renderer-stream-2-129.mirra.now
-    network: ws
-    ws-opts:
-      path: /api/v1/gpu-stream/socket
-      headers:
-        Host: renderer-stream-2-129.mirra.now
-    uuid: 27653b37-603c-4c90-b1f5-25c4d23f8932
+    uuid: fc3347e2-007d-4cad-fe28-3d80672c3ccc
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 252 - 1257
+      - vmess 251 - 1259
