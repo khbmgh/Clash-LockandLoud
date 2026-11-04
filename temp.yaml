@@ -4,22 +4,26 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 247 - 1300
+  - name: vmess 239 - 1279
     type: vmess
-    server: 8.218.195.61
+    server: 104.21.7.133
     port: 443
     udp: true
     tls: true
+    servername: vmess.lbw666.dpdns.org
+    alpn:
+      - http/1.1
+    client-fingerprint: chrome
     network: ws
     ws-opts:
-      path: /
+      path: /ws?ed=2048
       headers:
-        Host: EX1oGt73NzPQKAc2.v.3dns.vip
-    uuid: f23bb427-c1f9-4373-876c-2f43e9f790f3
+        Host: vmess.lbw666.dpdns.org
+    uuid: 0cf6d970-3f1d-4aae-a989-92a8f76ae3db
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 247 - 1300
+      - vmess 239 - 1279
