@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 252 - 1238
+  - name: vmess 243 - 1209
     type: vmess
-    server: 141.101.115.140
-    port: 443
+    server: 172.67.204.84
+    port: 8080
     udp: true
-    tls: true
     network: ws
     ws-opts:
-      path: /dongtaiwang.com
+      path: /nasnet/cdn
       headers:
-        Host: clash6.ssr-free.xyz
-    uuid: 5f64fa65-7b14-49c5-954d-aa15c6bfcacd
+        Host: nasnet-511952424.mcitel.co
+    uuid: nasnet
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 252 - 1238
+      - vmess 243 - 1209
