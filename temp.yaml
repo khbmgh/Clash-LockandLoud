@@ -4,23 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 247 - 1226
+  - name: vmess 272 - 1257
     type: vmess
-    server: 104.17.136.198
-    port: 443
+    server: 145.239.55.210
+    port: 80
     udp: true
-    tls: true
-    servername: vmess.lbw666.dpdns.org
     network: ws
     ws-opts:
-      path: /ws?ed=2048
+      path: /
       headers:
-        Host: vmess.lbw666.dpdns.org
-    uuid: 0cf6d970-3f1d-4aae-a989-92a8f76ae3db
+        Host: google.whatsapp.snapp.torob.basalam.fortresshost.ir.
+    uuid: 479526cd-5011-43cf-a788-504da95e07c2
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 247 - 1226
+      - vmess 272 - 1257
