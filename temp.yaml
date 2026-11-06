@@ -4,17 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 257 - 1251
+  - name: vmess 260 - 1294
     type: vmess
-    server: 167.235.205.182
-    port: 443
-    tls: false
-    skip-cert-verify: true
-    uuid: 6b7cbc41-fb80-41a8-8eb6-b5bdb0e86147
+    server: 152.67.8.205
+    port: 80
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: 152.67.8.205
+    uuid: 9db4c708-aef8-4359-821b-38e47990be0d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 257 - 1251
+      - vmess 260 - 1294
