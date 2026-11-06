@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 260 - 1294
+  - name: vmess 244 - 1277
     type: vmess
-    server: 152.67.8.205
-    port: 80
+    server: 109.70.74.149
+    port: 54041
     udp: true
-    network: ws
-    ws-opts:
-      path: /
-      headers:
-        Host: 152.67.8.205
-    uuid: 9db4c708-aef8-4359-821b-38e47990be0d
+    uuid: 48d6059a-34f0-4042-b7fd-7bd552ae8d69
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 260 - 1294
+      - vmess 244 - 1277
