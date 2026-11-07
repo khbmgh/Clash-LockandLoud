@@ -4,21 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 240 - 1289
+  - name: vmess 251 - 1304
     type: vmess
-    server: 45.80.111.169
-    port: 8880
-    udp: true
+    server: 172.67.207.114
+    port: 443
+    tls: true
+    skip-cert-verify: true
     network: ws
     ws-opts:
-      path: /
+      path: linkvws
       headers:
-        Host: 45.80.111.169
-    uuid: e3dba91f-b31c-473a-8f17-92e1dedda38f
-    alterId: 0
+        Host: ophelia.mom
+    uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+    alterId: 1
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 240 - 1289
+      - vmess 251 - 1304
