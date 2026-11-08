@@ -4,21 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 278 - 1365
+  - name: vmess 277 - 1342
     type: vmess
-    server: 188.114.96.19
-    port: 80
+    server: 216.152.152.187
+    port: 22324
     udp: true
-    network: ws
-    ws-opts:
-      path: /
-      headers:
-        Host: google.whatsapp.snapp.torob.basalam.fortresshost.ir.
-    uuid: 479526cd-5011-43cf-a788-504da95e07c2
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 278 - 1365
+      - vmess 277 - 1342
