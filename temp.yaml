@@ -4,16 +4,24 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 277 - 1342
+  - name: vmess 260 - 1330
     type: vmess
-    server: 216.152.152.187
-    port: 22324
+    server: 104.18.42.163
+    port: 443
     udp: true
-    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    tls: true
+    servername: guanwang.awsno.com
+    skip-cert-verify: false
+    network: ws
+    ws-opts:
+      path: /hls/cctv5phd.m3u8
+      headers:
+        Host: guanwang.awsno.com
+    uuid: 6a89a215-22bf-4bd7-9642-b95b2e09583a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 277 - 1342
+      - vmess 260 - 1330
