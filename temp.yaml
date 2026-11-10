@@ -4,18 +4,23 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 285 - 1367
+  - name: vmess 296 - 1378
     type: vmess
-    server: 67.220.74.197
-    port: 1270
+    server: 162.159.128.17
+    port: 443
     udp: true
     tls: true
-    servername: xmfhlpy.com
-    uuid: 5c040f1d-45db-43bd-8d46-e4950e433735
+    servername: ny-v2ray.ryin.vip
+    network: ws
+    ws-opts:
+      path: /ryinsocksv2board
+      headers:
+        Host: ny-v2ray.ryin.vip
+    uuid: c8b455ad-fff1-43e9-9af9-d97585c4534a
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 285 - 1367
+      - vmess 296 - 1378
