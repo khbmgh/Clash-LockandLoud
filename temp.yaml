@@ -4,14 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1341
-    type: socks5
-    server: 8.209.236.192
-    port: 1080
-    username: '123456'
-    password: '123456'
+  - name: vmess 275 - 1310
+    type: vmess
+    server: 45.80.111.169
+    port: 8880
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: 45.80.111.169
+    uuid: e3dba91f-b31c-473a-8f17-92e1dedda38f
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1341
+      - vmess 275 - 1310
