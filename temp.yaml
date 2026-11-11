@@ -4,21 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 278 - 1309
-    type: vmess
-    server: 104.19.59.89
-    port: 2086
-    udp: true
-    network: ws
-    ws-opts:
-      path: github.com/Alvin9999
-      headers:
-        Host: ip14.freegradely.xyz
-    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1341
+    type: socks5
+    server: 8.209.236.192
+    port: 1080
+    username: '123456'
+    password: '123456'
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 278 - 1309
+      - socks 1 - 1341
