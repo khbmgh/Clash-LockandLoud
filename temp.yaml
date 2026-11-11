@@ -4,22 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 256 - 1326
+  - name: vmess 278 - 1309
     type: vmess
-    server: 185.204.170.130
-    port: 443
+    server: 104.19.59.89
+    port: 2086
     udp: true
-    tls: true
-    servername: 185.204.170.130
-    alpn:
-      - h2
-      - http/1.1
-    client-fingerprint: chrome
-    uuid: b8136e5f-8ece-4a06-99af-5a207c749bc4
+    network: ws
+    ws-opts:
+      path: github.com/Alvin9999
+      headers:
+        Host: ip14.freegradely.xyz
+    uuid: e9e3cc13-db48-4cc1-8c24-7626439a5339
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 256 - 1326
+      - vmess 278 - 1309
