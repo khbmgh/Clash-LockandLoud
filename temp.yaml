@@ -4,13 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1298
-    type: socks5
-    server: 47.251.166.203
-    port: 1080
-    skip-cert-verify: true
+  - name: vmess 243 - 1282
+    type: vmess
+    server: 141.11.139.102
+    port: 32515
+    udp: true
+    uuid: 081dbf5a-d8b6-40c8-96f8-3c4ca9f50442
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1298
+      - vmess 243 - 1282
