@@ -4,15 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1328
-    type: socks5
-    server: 47.242.19.215
-    port: 8899
-    skip-cert-verify: true
-    username: admin
-    password: admin
+  - name: vmess 258 - 1281
+    type: vmess
+    server: 141.101.115.33
+    port: 443
+    udp: true
+    tls: true
+    network: ws
+    ws-opts:
+      path: /guolicheng/hinet?ed=2048
+      headers:
+        Host: hinet.meizhiyuanya.xyz
+    uuid: 5ceb716a-9a0c-493a-9a0b-a05e08a1b1fc
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1328
+      - vmess 258 - 1281
