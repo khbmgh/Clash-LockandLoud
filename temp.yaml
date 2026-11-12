@@ -4,16 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 243 - 1282
-    type: vmess
-    server: 141.11.139.102
-    port: 32515
-    udp: true
-    uuid: 081dbf5a-d8b6-40c8-96f8-3c4ca9f50442
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1328
+    type: socks5
+    server: 47.242.19.215
+    port: 8899
+    skip-cert-verify: true
+    username: admin
+    password: admin
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 243 - 1282
+      - socks 1 - 1328
