@@ -4,21 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 261 - 1300
-    type: vmess
-    server: 104.16.85.20
-    port: 80
-    udp: true
-    network: ws
-    ws-opts:
-      path: /
-      headers:
-        Host: sg4-v2ray.sshkit.org
-    uuid: c6747da4-fb2e-4a2a-bdb7-8614bdd6b0b3
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1282
+    type: socks5
+    server: 43.133.21.24
+    port: 3001
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 261 - 1300
+      - socks 1 - 1282
