@@ -4,21 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 253 - 1280
+  - name: vmess 261 - 1300
     type: vmess
-    server: 188.114.96.19
+    server: 104.16.85.20
     port: 80
     udp: true
     network: ws
     ws-opts:
-      path: /d3d3LmlyYW5ob3N0LmNvbQ==?ed=2560
+      path: /
       headers:
-        Host: https.http.www.net.com.ramseyv2.ir.
-    uuid: af4be52a-aab3-4db1-a6bb-c23700dcb9c2
+        Host: sg4-v2ray.sshkit.org
+    uuid: c6747da4-fb2e-4a2a-bdb7-8614bdd6b0b3
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 253 - 1280
+      - vmess 261 - 1300
