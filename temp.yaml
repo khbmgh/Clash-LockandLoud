@@ -4,7 +4,7 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1295
+  - name: socks 2 - 1333
     type: socks5
     server: 2.26.204.46
     port: 31003
@@ -14,4 +14,4 @@ proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1295
+      - socks 2 - 1333
