@@ -4,16 +4,19 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 242 - 1276
+  - name: vmess 243 - 1307
     type: vmess
-    server: 45.80.215.8
-    port: 22324
+    server: 136.243.83.105
+    port: 46277
     udp: true
-    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    network: grpc
+    grpc-opts:
+      grpc-service-name: Telegram=@Net2ray
+    uuid: aa8a26cd-94f4-4f11-a3b3-48f30a127627
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 242 - 1276
+      - vmess 243 - 1307
