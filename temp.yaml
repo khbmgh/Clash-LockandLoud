@@ -4,14 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1333
-    type: socks5
-    server: 2.26.204.46
-    port: 31003
-    username: socks
-    password: pLBgZ2mOWDopvTI6CUWu5ZkI
+  - name: vmess 242 - 1276
+    type: vmess
+    server: 45.80.215.8
+    port: 22324
+    udp: true
+    uuid: 04621bae-ab36-11ec-b909-0242ac120002
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1333
+      - vmess 242 - 1276
