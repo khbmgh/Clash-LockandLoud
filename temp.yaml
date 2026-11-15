@@ -4,15 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1330
-    type: socks5
-    server: 104.168.249.36
-    port: 1080
+  - name: vmess 236 - 1289
+    type: vmess
+    server: 188.114.97.3
+    port: 443
+    tls: true
     skip-cert-verify: true
-    username: test123
-    password: test123
+    network: ws
+    ws-opts:
+      path: /linkws
+      headers:
+        Host: afrhms16v.bestxray.buzz
+    uuid: f584de15-2034-4170-a723-f48c2bae5e0f
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1330
+      - vmess 236 - 1289
