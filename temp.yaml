@@ -4,21 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 247 - 1277
-    type: vmess
-    server: 172.67.204.84
-    port: 8080
-    udp: true
-    network: ws
-    ws-opts:
-      path: /Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder,Thunder?ed=2048
-      headers:
-        Host: www.speedtest.net.75.mralpha-vpn.COM.
-    uuid: 511840c3-558a-4c14-8e61-43de4715fd9b
-    alterId: 0
-    cipher: auto
+  - name: socks 3 - 1254
+    type: socks5
+    server: 104.168.249.36
+    port: 1080
+    skip-cert-verify: true
+    username: test123
+    password: test123
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 247 - 1277
+      - socks 3 - 1254
