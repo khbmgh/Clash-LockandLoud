@@ -4,16 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 249 - 1271
-    type: vmess
-    server: 178.105.168.171
-    port: 2110
-    udp: true
-    uuid: 06d4d001-4168-4876-9416-7caecf578f40
-    alterId: 0
-    cipher: auto
+  - name: socks 1 - 1271
+    type: socks5
+    server: 66.253.2.69
+    port: 62000
+    username: u_rb1dba2
+    password: l1tlrdx52v
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 249 - 1271
+      - socks 1 - 1271
