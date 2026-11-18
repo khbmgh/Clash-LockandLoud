@@ -4,16 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 240 - 1248
-    type: vmess
-    server: 206.1.100.98
-    port: 49303
-    udp: true
-    uuid: 7a1770a1-d8e7-4794-9646-835450d9f38a
-    alterId: 0
-    cipher: auto
+  - name: socks 3 - 1311
+    type: socks5
+    server: 103.248.150.50
+    port: 42000
+    username: paZFN3JA
+    password: EGJDy5Kg
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 240 - 1248
+      - socks 3 - 1311
