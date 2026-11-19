@@ -4,14 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 3 - 1311
+  - name: socks 7 - 1297
     type: socks5
-    server: 103.248.150.50
-    port: 42000
-    username: paZFN3JA
-    password: EGJDy5Kg
+    server: 94.194.164.203
+    port: 62000
+    username: rVkkraqT
+    password: 2j7CCZQb
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 3 - 1311
+      - socks 7 - 1297
