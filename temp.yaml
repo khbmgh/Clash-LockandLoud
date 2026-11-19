@@ -4,14 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 7 - 1297
-    type: socks5
-    server: 94.194.164.203
-    port: 62000
-    username: rVkkraqT
-    password: 2j7CCZQb
+  - name: vmess 250 - 1267
+    type: vmess
+    server: 23.227.38.23
+    port: 8080
+    udp: true
+    network: ws
+    ws-opts:
+      path: 34c0bb5e-c120-432d-9c58-bd7d82c7397b-vm
+      headers:
+        Host: uh-lawyers-instruments-kernel.trycloudflare.com
+    uuid: 34c0bb5e-c120-432d-9c58-bd7d82c7397b
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 7 - 1297
+      - vmess 250 - 1267
