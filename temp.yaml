@@ -4,14 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 1 - 1281
+  - name: socks 5 - 1291
     type: socks5
-    server: 66.253.2.69
-    port: 62000
-    username: u_rb1dba2
-    password: l1tlrdx52v
+    server: 92.5.68.29
+    port: 1080
+    skip-cert-verify: true
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 1 - 1281
+      - socks 5 - 1291
