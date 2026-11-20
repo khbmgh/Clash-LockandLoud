@@ -4,13 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 4 - 1275
-    type: socks5
-    server: 103.248.228.166
-    port: 5555
-    skip-cert-verify: true
+  - name: vmess 250 - 1276
+    type: vmess
+    server: 51.75.160.126
+    port: 80
+    udp: true
+    network: ws
+    ws-opts:
+      path: /vmess
+      headers:
+        Host: 51.75.160.126
+    uuid: b739a204-ea0d-428b-bbf5-a632ec05edcf
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 4 - 1275
+      - vmess 250 - 1276
