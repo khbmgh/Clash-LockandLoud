@@ -4,22 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 266 - 1285
-    type: vmess
-    server: 141.101.114.133
-    port: 443
-    udp: true
-    tls: true
-    network: ws
-    ws-opts:
-      path: /ray
-      headers:
-        Host: lg1.cfcdn1.xyz
-    uuid: fcfaec91-6096-44d8-956c-7868d9e874b1
-    alterId: 0
-    cipher: auto
+  - name: socks 7 - 1277
+    type: socks5
+    server: 69.16.157.244
+    port: 1080
+    skip-cert-verify: true
+    username: ufCobhydz4Wd
+    password: JdFlrZhqHP
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 266 - 1285
+      - socks 7 - 1277
