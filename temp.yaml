@@ -4,21 +4,22 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 250 - 1276
+  - name: vmess 266 - 1285
     type: vmess
-    server: 51.75.160.126
-    port: 80
+    server: 141.101.114.133
+    port: 443
     udp: true
+    tls: true
     network: ws
     ws-opts:
-      path: /vmess
+      path: /ray
       headers:
-        Host: 51.75.160.126
-    uuid: b739a204-ea0d-428b-bbf5-a632ec05edcf
+        Host: lg1.cfcdn1.xyz
+    uuid: fcfaec91-6096-44d8-956c-7868d9e874b1
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 250 - 1276
+      - vmess 266 - 1285
