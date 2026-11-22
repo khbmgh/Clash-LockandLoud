@@ -4,12 +4,26 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 2 - 1291
-    type: socks5
-    server: 183.106.215.208
-    port: 1080
+  - name: vmess 262 - 1272
+    type: vmess
+    server: 192.204.58.87
+    port: 52080
+    udp: true
+    tls: false
+    skip-cert-verify: true
+    network: http
+    http-opts:
+      method: GET
+      path:
+        - /3x
+      headers:
+        Host:
+          - mmsc.vnet.mobi
+    uuid: 700dc5c3-9b7b-4ac8-8ee5-010ca3d03789
+    alterId: 0
+    cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 2 - 1291
+      - vmess 262 - 1272
