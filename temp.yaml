@@ -4,26 +4,21 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 262 - 1272
+  - name: vmess 244 - 1244
     type: vmess
-    server: 192.204.58.87
-    port: 52080
+    server: 104.19.47.113
+    port: 8080
     udp: true
-    tls: false
-    skip-cert-verify: true
-    network: http
-    http-opts:
-      method: GET
-      path:
-        - /3x
+    network: ws
+    ws-opts:
+      path: /?ed=2048&Telegram🇨🇳 @WangCai2
       headers:
-        Host:
-          - mmsc.vnet.mobi
-    uuid: 700dc5c3-9b7b-4ac8-8ee5-010ca3d03789
+        Host: oiictw.yydsii.com
+    uuid: b551aa22-22af-11ee-b8d8-f23c932eb68d
     alterId: 0
     cipher: auto
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 262 - 1272
+      - vmess 244 - 1244
