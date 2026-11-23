@@ -4,14 +4,16 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 7 - 1317
+  - name: socks 7 - 1312
     type: socks5
-    server: 66.253.2.69
-    port: 62000
-    username: u_rb1dba2
-    password: l1tlrdx52v
+    server: 144.56.22.78
+    port: 42000
+    udp: true
+    skip-cert-verify: true
+    username: L8wP3kQx
+    password: Zn5mR7vA
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 7 - 1317
+      - socks 7 - 1312
