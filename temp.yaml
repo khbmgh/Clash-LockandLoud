@@ -4,16 +4,13 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 7 - 1312
+  - name: socks 6 - 1290
     type: socks5
-    server: 144.56.22.78
-    port: 42000
+    server: 69.55.49.177
+    port: 38182
     udp: true
-    skip-cert-verify: true
-    username: L8wP3kQx
-    password: Zn5mR7vA
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 7 - 1312
+      - socks 6 - 1290
