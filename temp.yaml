@@ -4,15 +4,14 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: socks 11 - 1156
+  - name: socks 7 - 1139
     type: socks5
-    server: 203.84.138.59
+    server: 66.253.2.69
     port: 62000
-    skip-cert-verify: true
-    username: 9tcjLp2W
-    password: RRWtX6XP
+    username: u_rb1dba2
+    password: l1tlrdx52v
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - socks 11 - 1156
+      - socks 7 - 1139
