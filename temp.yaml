@@ -4,18 +4,15 @@ allow-lan: false
 mode: global
 log-level: silent
 proxies:
-  - name: vmess 173 - 1147
-    type: vmess
-    server: 38.91.100.69
-    port: 1270
-    udp: true
-    tls: true
-    servername: xmfhlpy.com
-    uuid: 5c040f1d-45db-43bd-8d46-e4950e433735
-    alterId: 0
-    cipher: auto
+  - name: socks 6 - 1129
+    type: socks5
+    server: 69.16.157.244
+    port: 1080
+    skip-cert-verify: true
+    username: ufCobhydz4Wd
+    password: JdFlrZhqHP
 proxy-groups:
   - name: GLOBAL
     type: select
     proxies:
-      - vmess 173 - 1147
+      - socks 6 - 1129
